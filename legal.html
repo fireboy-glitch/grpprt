@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Documents | Nepal Odyssey</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+color:#222;
+}
+
+/* Header */
+.header{
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,.06);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.container{
+width:90%;
+max-width:1100px;
+margin:auto;
+}
+
+.navbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+height:70px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:700;
+color:#1a73e8;
+text-decoration:none;
+}
+
+.nav-menu{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+.nav-link{
+text-decoration:none;
+color:#222;
+font-weight:500;
+}
+
+.page-header{
+padding:80px 0;
+background:linear-gradient(120deg,#1a73e8,#4ca6ff);
+color:white;
+text-align:center;
+}
+
+.page-header h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.legal-section{
+padding:60px 0;
+}
+
+.section-title{
+text-align:center;
+font-size:26px;
+margin-bottom:30px;
+font-weight:600;
+}
+
+.legal-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.legal-card{
+background:white;
+border-radius:14px;
+padding:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.legal-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+.legal-img{
+width:100%;
+height:220px;
+border-radius:12px;
+background-size:cover;
+background-position:center;
+margin-bottom:12px;
+}
+
+.legal-title{
+font-size:18px;
+font-weight:600;
+margin-bottom:5px;
+}
+
+.legal-meta{
+font-size:13px;
+color:#555;
+margin-bottom:10px;
+}
+
+.legal-actions{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+}
+
+.btn{
+padding:8px 14px;
+border-radius:8px;
+border:none;
+cursor:pointer;
+font-size:13px;
+font-weight:600;
+}
+
+.primary{
+background:#1a73e8;
+color:white;
+}
+
+.secondary{
+background:#f1f1f1;
+}
+
+/* Disclaimer box */
+.disclaimer-box{
+margin-top:40px;
+padding:18px;
+background:#fff8e6;
+border-left:6px solid #ffb300;
+border-radius:12px;
+}
+
+.footer{
+text-align:center;
+padding:30px 0;
+color:#555;
+}
+/* ========= ROOT COLORS (match your theme) ========= */
+:root{
+  --primary-hue: 215;
+  --primary-color: hsl(var(--primary-hue), 100%, 45%);
+  --primary-dark: hsl(var(--primary-hue), 100%, 30%);
+  --primary-light: hsl(var(--primary-hue), 95%, 92%);
+  --background: #f4f7fb;
+  --card-bg: rgba(255,255,255,0.92);
+  --text-dark:#0f172a;
+  --text-light:#6b7280;
+  --border:#e5e7eb;
+}
+
+/* ========= GLOBAL ========= */
+body{
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(120deg,#eef3ff,#f9fbff);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* ========= PAGE HEADER ========= */
+.legal-header{
+  max-width: 1100px;
+  margin: 40px auto 20px;
+  padding: 25px 30px;
+  background: var(--card-bg);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 15px 35px rgba(0,0,0,.07);
+}
+
+.legal-header h1{
+  font-size: 2rem;
+  color: var(--primary-dark);
+  margin-bottom: 6px;
+}
+
+.legal-header p{
+  color: var(--text-light);
+}
+
+/* ========= COMPANY BLOCK ========= */
+.company-info-box{
+  max-width: 1100px;
+  margin: 10px auto 25px;
+  padding: 18px 22px;
+  background: white;
+  border-radius: 14px;
+  border: 1px dashed var(--primary-color);
+}
+
+.company-info-box h2{
+  font-size: 1.25rem;
+  margin-bottom: 5px;
+}
+
+.company-info-box span{
+  color: var(--text-light);
+}
+
+/* ========= DOCUMENT GRID ========= */
+.document-grid{
+  max-width: 1150px;
+  margin: 0 auto 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 22px;
+}
+
+/* ========= DOCUMENT CARD ========= */
+.document-card{
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 30px rgba(0,0,0,.06);
+  transition: .3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.document-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.08);
+  border-color: var(--primary-light);
+}
+
+.document-card h3{
+  font-size: 1.05rem;
+  margin: 6px 0 10px;
+}
+
+/* ========= IMAGE PREVIEW ========= */
+.document-card img{
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #dbe2f3;
+}
+
+/* ========= STATUS TAG ========= */
+.doc-status{
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+/* ========= BUTTONS ========= */
+.doc-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.doc-btn{
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 10px;
+  border: 1px solid var(--primary-color);
+  font-size: 14px;
+  cursor: pointer;
+  transition: .3s ease;
+  text-decoration: none;
+  color: var(--primary-dark);
+}
+
+.doc-btn.view{
+  background: var(--primary-color);
+  color: white;
+}
+
+.doc-btn:hover{
+  transform: translateY(-2px);
+}
+
+/* ========= VIEW MODAL (CSS ONLY) ========= */
+.doc-modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content{
+  background: white;
+  padding: 15px;
+  border-radius: 16px;
+  max-width: 750px;
+  width: 100%;
+}
+
+.modal-content img{
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* checkbox hack */
+input[type=checkbox].open-modal:checked ~ .doc-modal{
+  display: flex;
+}
+
+/* ========= RESPONSIVE ========= */
+@media(max-width:650px){
+  .legal-header h1{
+    font-size: 1.6rem;
+  }
+  .document-card img{
+    height: 170px;
+  }
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    position: relative;
+    margin: 0 1rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--light-color);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link i {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+    list-style: none;
+    z-index: 100;
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background: var(--dark-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+[data-theme="dark"] .dropdown-menu li a {
+    color: var(--light-color);
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(58, 134, 255, 0.1);
+    color: var(--primary-color);
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-mountain"></i>
+                        <span>Nepal Odyssey</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="./index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="./packages.html" class="nav-link">Packages<i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="trekking.html">Trekkings</a></li>
+                            <li><a href="tour.html">Tours</a></li>
+                            <li><a href="customtrip.html">Custom Trip</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link">Gallery</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="about.html" class="nav-link">About <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="./guides(1).html">Our Guides</a></li>
+                            <li><a href="legal.html">Legal Documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+               
+                    <div class="hamburger">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+<section class="page-header">
+<h1>Legal Documents</h1>
+<p>Official licenses and certifications of Nepal Odyssey</p>
+</section>
+
+<section class="legal-section">
+<div class="container">
+
+<h2 class="section-title">Company Certifications & Licenses</h2>
+
+<div class="legal-grid">
+
+<!-- TAAN -->
+<div class="legal-card">
+<div class="legal-img" style="background-image:url('./WhatsApp\ Image\ 2025-11-27\ at\ 05.22.12_30ba3cc0.jpg');"></div>
+<h3 class="legal-title">TAAN Membership Certificate</h3>
+<p class="legal-meta">Trekking Agencies’ Association of Nepal</p>
+
+<div class="legal-actions">
+<button class="btn primary">View</button>
+<button class="btn secondary">Download</button>
+</div>
+</div>
+
+<!-- NMA -->
+<div class="legal-card">
+<div class="legal-img" style="background-image:url('./WhatsApp\ Image\ 2025-11-27\ at\ 05.22.21_03a91077.jpg');"></div>
+<h3 class="legal-title">NMA Membership Certificate</h3>
+<p class="legal-meta">Nepal Mountaineering Association</p>
+
+<div class="legal-actions">
+<button class="btn primary">View</button>
+<button class="btn secondary">Download</button>
+</div>
+</div>
+
+<!-- Tourism license -->
+<div class="legal-card">
+<div class="legal-img" style="background-image:url('./WhatsApp\ Image\ 2025-11-27\ at\ 05.22.22_766de791.jpg');"></div>
+<h3 class="legal-title">Tourism Business License</h3>
+<p class="legal-meta">Government of Nepal – Ministry of Tourism</p>
+
+<div class="legal-actions">
+<button class="btn primary">View</button>
+<button class="btn secondary">Download</button>
+</div>
+</div>
+
+<!-- PAN -->
+<div class="legal-card">
+<div class="legal-img" style="background-image:url('./WhatsApp\ Image\ 2025-11-27\ at\ 05.22.22_7aef52e5.jpg');"></div>
+<h3 class="legal-title">PAN / VAT Registration</h3>
+<p class="legal-meta">Permanent Account Number</p>
+
+<div class="legal-actions">
+<button class="btn primary">View</button>
+<button class="btn secondary">Download</button>
+</div>
+</div>
+
+<!-- Company Registration -->
+<div class="legal-card">
+<div class="legal-img" style="background-image:url('./WhatsApp\ Image\ 2025-11-27\ at\ 05.22.22_6ec6c69c.jpg');"></div>
+<h3 class="legal-title">Company Registration Certificate</h3>
+<p class="legal-meta">Office of Company Registrar</p>
+
+<div class="legal-actions">
+<button class="btn primary">View</button>
+<button class="btn secondary">Download</button>
+</div>
+</div>
+
+</div>
+
+<div class="disclaimer-box">
+<strong>Legal Notice:</strong>
+<p>
+All documents displayed on this page are authentic legal records issued by the Government of Nepal and authorized tourism associations. Copies are provided for transparency purposes only.
+</p>
+</div>
+
+</div>
+</section>
+
+<footer class="footer">
+© Nepal Odyssey | All Rights Reserved
+</footer>
+
+</body>
+</html>

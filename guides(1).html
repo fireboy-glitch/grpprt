@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Guides - Nepal Odyssey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+        :root{
+            --primary:#3b82f6;
+            --primary-dark:#1d4ed8;
+            --dark:#0f172a;
+            --text:#1e293b;
+            --light:#f8fafc;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#f5f7fb;
+            color:var(--text);
+        }
+
+        /* HEADER / NAVBAR */
+        .header{
+            position:fixed;
+            top:0;
+            width:100%;
+            background:white;
+            box-shadow:0 3px 14px rgba(0,0,0,0.12);
+            z-index:1000;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+            padding:0 20px;
+        }
+
+        .navbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:1rem 0;
+        }
+
+        .logo{
+            text-decoration:none;
+            color:var(--dark);
+            font-weight:700;
+            font-size:1.5rem;
+            display:flex;
+            align-items:center;
+        }
+
+        .logo i{
+            margin-right:8px;
+            color:var(--primary);
+        }
+
+        .nav-menu{
+            list-style:none;
+            display:flex;
+        }
+
+        .nav-item{
+            margin-left:20px;
+        }
+
+        .nav-link{
+            text-decoration:none;
+            color:var(--dark);
+            font-weight:500;
+        }
+
+        .nav-link:hover{
+            color:var(--primary);
+        }
+
+        /* PAGE TITLE SECTION */
+
+        .page-header{
+            margin-top:80px;
+            padding:110px 0 70px;
+            color:white;
+            background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+            text-align:center;
+        }
+
+        .page-header h1{
+            font-size:3rem;
+            font-family:'Montserrat',sans-serif;
+            margin-bottom:.5rem;
+        }
+
+        /* GUIDES SECTION */
+
+        .guides-section{
+            padding:60px 0;
+        }
+
+        .guides-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:2rem;
+        }
+
+        .guide-card{
+            background:white;
+            border-radius:14px;
+            overflow:hidden;
+            box-shadow:0 8px 18px rgba(0,0,0,0.12);
+            transition:.3s;
+        }
+
+        .guide-card:hover{
+            transform:translateY(-6px);
+            box-shadow:0 16px 30px rgba(0,0,0,0.18);
+        }
+
+        .guide-photo{
+            height:260px;
+            background-size:cover;
+            background-position:center;
+        }
+
+        .guide-content{
+            padding:1.5rem;
+        }
+
+        .guide-name{
+            font-size:1.4rem;
+            font-family:Montserrat,sans-serif;
+            margin-bottom:.3rem;
+        }
+
+        .guide-role{
+            color:#475569;
+            font-size:.95rem;
+            margin-bottom:1rem;
+        }
+
+        .guide-info{
+            font-size:.95rem;
+            line-height:1.6rem;
+            color:#334155;
+            margin-bottom:1rem;
+        }
+
+        .tag{
+            display:inline-block;
+            background:#e8f0ff;
+            color:#1e3a8a;
+            padding:3px 10px;
+            margin:3px;
+            border-radius:12px;
+            font-size:.8rem;
+        }
+
+        /* FOOTER */
+
+        .footer{
+            background:var(--dark);
+            color:white;
+            text-align:center;
+            padding:30px 0;
+            margin-top:40px;
+        }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+.logo i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+}
+
+[data-theme="dark"] .logo {
+    color: var(--light-color);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    position: relative;
+    margin: 0 1rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--light-color);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link i {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+    list-style: none;
+    z-index: 100;
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background: var(--dark-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+[data-theme="dark"] .dropdown-menu li a {
+    color: var(--light-color);
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(58, 134, 255, 0.1);
+    color: var(--primary-color);
+}
+
+    </style>
+</head>
+
+<body>
+ <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-mountain"></i>
+                        <span>Nepal Odyssey</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="./index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="./packages.html" class="nav-link">Packages<i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="customtrip.html">Custom Trip</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link">Gallery</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="about.html" class="nav-link">About <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="./guides(1).html">Our Guides</a></li>
+                            <li><a href="legal.html">Legal Documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul></nav></div>
+</header>
+
+<section class="page-header">
+    <div class="container">
+        <h1>Our Professional Guides</h1>
+        <p>Experienced, licensed and mountain-trained tour leaders of Nepal Odyssey</p>
+    </div>
+</section>
+
+<section class="guides-section">
+    <div class="container">
+
+        <div class="guides-grid">
+
+            <!-- Guide 1 -->
+            <div class="guide-card">
+                <div class="guide-photo" style="background-image:url('./rizan.jpeg');"></div>
+                <div class="guide-content">
+                    <h3 class="guide-name">Rizan Subedi</h3>
+                    <p class="guide-role">Senior Trekking & Mountain Guide(group leader)</p>
+                    <p class="guide-info">
+                      Rizan is the kind of leader who brings clarity, confidence, and calm direction to every project. As the group leader, he combines strong technical understanding with a natural ability to guide others, making sure the team stays organized, motivated, and always moving forward.
+                       He has a talent for breaking down complex tasks, listening to different viewpoints, and helping everyone bring out their best.
+With a curious mind and a steady work ethic, Rizan is always looking for smarter ways to solve problems and improve the team’s workflow. He values collaboration, open communication, and creating an environment where everyone feels supported. Whether he’s planning, coordinating, or stepping in to help with hands-on work, Rizan leads with patience, responsibility, and genuine dedication.
+                    <span class="tag">Everest Base Camp</span>
+                    <span class="tag">Peak Climbing</span>
+                    <span class="tag">High Altitude</span>
+                </div>
+            </div>
+
+            <!-- Guide 2 -->
+            <div class="guide-card">
+                <div class="guide-photo" style="background-image:url('./bhaskar.jpeg');"></div>
+                <div class="guide-content">
+                    <h3 class="guide-name">Bhaskar Malla</h3>
+                    <p class="guide-role">Cultural & City Tour Guide</p>
+                    <p class="guide-info">
+                       A highly skilled and passionate programmer, he combines creativity with strong technical expertise to build efficient, user-friendly solutions. With a solid foundation in multiple programming languages and problem-solving techniques, he enjoys turning complex ideas into functional, polished systems. 
+                       His curiosity drives him to continuously learn new technologies and improve his craft. Whether working independently or in a team, he brings reliability, dedication, and innovation to every project he undertakes with his team.
+                    </p>
+                    <span class="tag">Heritage Tours</span>
+                    <span class="tag">UNESCO Sites</span>
+                    <span class="tag">City Guide</span>
+                </div>
+            </div>
+
+            <!-- Guide 3 -->
+            <div class="guide-card">
+                <div class="guide-photo" style="background-image:url('./aryan.jpeg');"></div>
+                <div class="guide-content">
+                    <h3 class="guide-name">Aryan Devkota</h3>
+                    <p class="guide-role">Trekking Guide</p>
+                    <p class="guide-info">
+                      Aaryan is a dedicated and talented programmer who blends creativity with strong technical expertise to build efficient, intuitive, and high-quality solutions.
+                       With experience across multiple programming languages and a natural strength in problem-solving, 
+                       he enjoys turning complex concepts into clean, functional systems.
+Curious by nature, Aaryan constantly explores new technologies to expand his skills and stay ahead in the world of software development.
+ Whether working independently or collaborating with a team, he brings reliability, passion, and innovative thinking to every project he contributes to.
+                    </p>
+                    <span class="tag">Annapurna Region</span>
+                    <span class="tag">Mardi Himal</span>
+                    <span class="tag">Poon Hill</span>
+                </div>
+            </div>
+
+            <!-- Guide 4 -->
+            <div class="guide-card">
+                <div class="guide-photo" style="background-image:url('./kushal.jpeg');"></div>
+                <div class="guide-content">
+                    <h3 class="guide-name">Kushal Shreshtha</h3>
+                    <p class="guide-role">Climbing Guide</p>
+                    <p class="guide-info">
+                        Kushal is a reliable and dedicated team member who brings steady focus, positivity, and genuine effort to every project. He quickly understands what needs to be done and approaches each task with patience and care, making him someone the entire team can count on. Whether he’s learning something new or stepping in to support others, Kushal always gives his best.
+With a calm mindset and a willingness to grow, Kushal is constantly improving his skills and finding better ways to contribute to the team’s success. He values teamwork, clear communication, and creating a comfortable environment where everyone can work confidently. No matter the challenge, Kushal approaches it with responsibility, humility, and a sincere desire to help the group move forward.
+
+                    </p>
+                    <span class="tag">Climbing</span>
+                    <span class="tag">Island Peak</span>
+                    <span class="tag">Mera Peak</span>
+                </div>
+            </div>
+  <!-- Guide 5-->
+            <div class="guide-card">
+                <div class="guide-photo" style="background-image:url('./gyan.jpeg');"></div>
+                <div class="guide-content">
+                    <h3 class="guide-name">Gyan Bahadur Tamang</h3>
+                    <p class="guide-role">Trekking Guide</p>
+                    <p class="guide-info">
+                      
+                      Gyan is a thoughtful and hardworking team member who brings a calm, steady energy to every project. He has a strong ability to grasp new concepts quickly and apply them in practical, effective ways. Whether he’s solving a problem, helping a teammate, or exploring new ideas, 
+                      Gyan approaches every task with focus and genuine curiosity.
+He values learning, teamwork, and doing things the right way, which makes him a reliable presence in any group setting.
+Gyan’s patience and willingness to listen create a supportive environment where everyone feels comfortable sharing ideas. With a balanced mindset and consistent dedication, he contributes meaningfully to the team’s progress and growth.
+                    
+                    </p>
+                    <span class="tag">Climbing</span>
+                    <span class="tag">Island Peak</span>
+                    <span class="tag">Mera Peak</span>
+                </div>
+            </div>
+  <!-- Guide 6 -->
+            <div class="guide-card">
+                <div class="guide-photo" style="background-image:url('./ishan.jpeg');"></div>
+                <div class="guide-content">
+                    <h3 class="guide-name">Ishan Timalsina</h3>
+                    <p class="guide-role">Closed Guide</p>
+                    <p class="guide-info">
+                       Ishan is a team member who contributed to the project with his skills and technical knowledge.
+                       While he wasn’t always involved in every aspect, he provided valuable support where it was 
+                       needed and helped the team overcome specific challenges. His expertise and 
+                       input played a role in moving the project forward, and his efforts were appreciated by the group.
+
+                    </p>
+                    <span class="tag">Climbing</span>
+                    <span class="tag">Island Peak</span>
+                    <span class="tag">Mera Peak</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2025 Nepal Odyssey — All Rights Reserved</p>
+</footer>
+
+</body>
+</html>

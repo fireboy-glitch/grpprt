@@ -1,0 +1,30 @@
+{
+  "treks": [
+    {
+      "id": 9,
+      "title": "Sagarmatha National Park Trek",
+      "location": "Solukhumbu District, Nepal",
+      "image": "images/trek-sagarmatha.jpg",
+      "duration": "10 days",
+      "difficulty": "Moderate",
+      "altitude": "3,880m",
+      "price": 1200,
+      "region": "everest",
+      "season": "spring,autumn",
+      "description": "Explore the UNESCO World Heritage Site of Sagarmatha National Park, home to diverse flora and fauna with stunning views of Everest."
+    },
+    {
+      "id": 10,
+      "title": "K2 Base Camp Trek",
+      "location": "Pakistan (International Treks)",
+      "image": "images/trek-k2.jpg",
+      "duration": "21 days",
+      "difficulty": "Strenuous",
+      "altitude": "5,150m",
+      "price": 3500,
+      "region": "international",
+      "season": "summer",
+      "description": "A challenging expedition to the base of the world's second highest mountain in the Karakoram range of Pakistan."
+    }
+  ]
+}

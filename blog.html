@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog - Nepal Odyssey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #10b981;
+            --accent: #f97316;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .logo i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin: 0 1rem;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .blog-section {
+            padding: 5rem 0;
+        }
+        
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .blog-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-category {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-excerpt {
+            margin-bottom: 1rem;
+            color: #64748b;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+.logo i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+}
+
+[data-theme="dark"] .logo {
+    color: var(--light-color);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    position: relative;
+    margin: 0 1rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--light-color);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link i {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+    list-style: none;
+    z-index: 100;
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background: var(--dark-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+[data-theme="dark"] .dropdown-menu li a {
+    color: var(--light-color);
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(58, 134, 255, 0.1);
+    color: var(--primary-color);
+}
+    </style>
+</head>
+<body>
+      <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-mountain"></i>
+                        <span>Nepal Odyssey</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="./index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="./packages.html" class="nav-link">Packages<i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="customtrip.html">Custom Trip</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link">Gallery</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="about.html" class="nav-link">About <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="./guides(1).html">Our Guides</a></li>
+                            <li><a href="legal.html">Legal Documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul></nav></div></header>
+    <section class="page-header">
+        <div class="container">
+            <h1>Travel Blog</h1>
+            <p>Stories, tips, and insights from the Himalayas</p>
+        </div>
+    </section>
+
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-filters">
+                <button class="filter-btn active" data-filter="all">All Posts</button>
+                <button class="filter-btn" data-filter="trekking">Trekking Tips</button>
+                <button class="filter-btn" data-filter="culture">Culture</button>
+                <button class="filter-btn" data-filter="photography">Photography</button>
+                <button class="filter-btn" data-filter="adventure">Adventure</button>
+            </div>
+            
+            <div class="blog-grid" id="blogGrid">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nepal Odyssey. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Preparing for Everest Base Camp: A Complete Guide",
+                category: "trekking",
+                date: "March 15, 2023",
+                readTime: "8 min read",
+                image: "https://images.unsplash.com/photo-1544735716-2f4d584ddf55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZXZlcmVzdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                excerpt: "Everything you need to know before embarking on the journey to Everest Base Camp, from physical preparation to essential gear.",
+                fullContent: `
+                    <h2>Preparing for Everest Base Camp: A Complete Guide</h2>
+                    <p>Embarking on the Everest Base Camp trek is a dream for many adventure enthusiasts. This comprehensive guide will help you prepare for one of the most rewarding experiences of your life.</p>
+                    
+                    <h3>Physical Preparation</h3>
+                    <p>Start training at least 3-6 months before your trek. Focus on cardiovascular exercises, strength training, and hiking with a weighted backpack. Consistency is key to building the endurance needed for high-altitude trekking.</p>
+                    
+                    <h3>Essential Gear Checklist</h3>
+                    <p>Proper gear is crucial for comfort and safety in the Himalayas. Invest in quality hiking boots, layered clothing, and a reliable four-season sleeping bag. Don't forget trekking poles and a good headlamp.</p>
+                    
+                    <h3>Acclimatization Strategy</h3>
+                    <p>Follow the "climb high, sleep low" principle and include proper rest days. Stay hydrated and listen to your body to avoid altitude sickness.</p>
+                    
+                    <h3>Best Time to Trek</h3>
+                    <p>The ideal seasons are spring (March-May) and autumn (September-November) when weather conditions are most favorable.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Sherpa Culture and Traditions in the Himalayas",
+                category: "culture",
+                date: "February 28, 2023",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHJla2tpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+                excerpt: "Discover the rich cultural heritage of the Sherpa people and their deep connection with the mountains.",
+                fullContent: `
+                    <h2>Sherpa Culture and Traditions in the Himalayas</h2>
+                    <p>The Sherpa people are an integral part of the Himalayan experience, known for their mountaineering expertise and rich cultural traditions.</p>
+                    
+                    <h3>Historical Background</h3>
+                    <p>Sherpas migrated from eastern Tibet to Nepal around 500 years ago. Their name literally means "people from the East." They settled in the Solu-Khumbu region and developed a unique culture adapted to high-altitude living.</p>
+                    
+                    <h3>Spiritual Beliefs</h3>
+                    <p>Sherpas practice Nyingmapa Buddhism, which blends Tibetan Buddhism with ancient animist beliefs. Key elements include Mani stones, prayer flags, and monasteries as community centers.</p>
+                    
+                    <h3>Traditional Lifestyle</h3>
+                    <p>Traditional Sherpa life revolves around agriculture, animal husbandry, and trading between Tibet and Nepal. Today, many work as mountain guides and trekking support staff.</p>
+                    
+                    <h3>Modern Challenges</h3>
+                    <p>While tourism has brought economic benefits, it also presents challenges for cultural preservation and environmental sustainability.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Best Photography Spots in Annapurna Circuit",
+                category: "photography",
+                date: "February 15, 2023",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1464822759849-e41f5bc42673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhpbWFsYXlhbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                excerpt: "Capture stunning Himalayan landscapes with our guide to the most photogenic locations along the Annapurna Circuit.",
+                fullContent: `
+                    <h2>Best Photography Spots in Annapurna Circuit</h2>
+                    <p>The Annapurna Circuit offers some of the most spectacular photography opportunities in the Himalayas. Here's where to capture the best shots.</p>
+                    
+                    <h3>Poon Hill Sunrise</h3>
+                    <p>Wake up early for the hike to Poon Hill (3,210m) to capture the stunning sunrise over the Annapurna and Dhaulagiri ranges. The golden light hitting the peaks is absolutely magical.</p>
+                    
+                    <h3>Thorong La Pass</h3>
+                    <p>At 5,416 meters, Thorong La offers panoramic views of the entire Annapurna massif. Capture the sense of achievement as trekkers cross this high pass.</p>
+                    
+                    <h3>Manang Valley</h3>
+                    <p>The traditional villages and ancient monasteries of Manang Valley provide excellent cultural photography opportunities. Don't miss the Braga Monastery with its stunning mountain backdrop.</p>
+                    
+                    <h3>Photography Tips</h3>
+                    <p>Use a polarizing filter to reduce glare, carry extra batteries, shoot in RAW format, and always respect local customs when photographing people.</p>
+                `
+            },
+            {
+                id: 4,
+                title: "Wildlife Encounters in Chitwan National Park",
+                category: "adventure",
+                date: "January 22, 2023",
+                readTime: "7 min read",
+                image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2hpdHdhbiUyMGFuaW1hbHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+                excerpt: "Experience the incredible biodiversity of Nepal's lowlands with jungle safaris and wildlife spotting.",
+                fullContent: `
+                    <h2>Wildlife Encounters in Chitwan National Park</h2>
+                    <p>Chitwan National Park offers a completely different side of Nepal - a tropical paradise teeming with wildlife and natural beauty.</p>
+                    
+                    <h3>Jungle Safari Experience</h3>
+                    <p>Explore the park on elephant back, by jeep, or on foot with experienced guides. Each method offers unique perspectives on the park's diverse ecosystem.</p>
+                    
+                    <h3>Iconic Wildlife</h3>
+                    <p>Spot the endangered one-horned rhinoceros, Bengal tigers, sloth bears, and over 500 species of birds in their natural habitat.</p>
+                    
+                    <h3>Best Viewing Times</h3>
+                    <p>Early morning and late afternoon are ideal for wildlife spotting. The dry season (October-March) offers the best visibility and animal concentrations around water sources.</p>
+                    
+                    <h3>Cultural Experiences</h3>
+                    <p>Visit Tharu villages to learn about indigenous culture and traditional dance performances that depict wildlife and nature.</p>
+                `
+            },
+            {
+                id: 5,
+                title: "Monsoon Trekking: Challenges and Rewards",
+                category: "trekking",
+                date: "December 10, 2022",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9uc29vbiUyMHRyZWtraW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+                excerpt: "Discover why monsoon season trekking offers unique experiences with lush landscapes and fewer crowds.",
+                fullContent: `
+                    <h2>Monsoon Trekking: Challenges and Rewards</h2>
+                    <p>While monsoon season (June-August) presents challenges, it also offers unique rewards for adventurous trekkers willing to brave the rains.</p>
+                    
+                    <h3>Lush Landscapes</h3>
+                    <p>The hills come alive with vibrant green vegetation, blooming rhododendrons, and rushing waterfalls. The air is clear and the mountain views can be spectacular between rain showers.</p>
+                    
+                    <h3>Fewer Crowds</h3>
+                    <p>Experience popular trails with significantly fewer tourists. Tea houses are more available and you'll have more personal interactions with locals.</p>
+                    
+                    <h3>Essential Gear</h3>
+                    <p>Waterproof everything - from your backpack to your boots. Quick-dry clothing, rain covers, and waterproof bags for electronics are essential.</p>
+                    
+                    <h3>Recommended Routes</h3>
+                    <p>Upper Mustang and Dolpo regions lie in the rain shadow and receive minimal rainfall, making them ideal for monsoon trekking.</p>
+                `
+            },
+            {
+                id: 6,
+                title: "Traditional Nepali Cuisine: A Food Lover's Guide",
+                category: "culture",
+                date: "November 5, 2022",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmVwYWxpJTIwZm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                excerpt: "Explore the diverse and flavorful world of Nepali cuisine, from street food to traditional dishes.",
+                fullContent: `
+                    <h2>Traditional Nepali Cuisine: A Food Lover's Guide</h2>
+                    <p>Nepali cuisine reflects the country's diverse geography and cultural influences, offering a unique culinary journey for every traveler.</p>
+                    
+                    <h3>Staple Dishes</h3>
+                    <p>Dal Bhat (lentil soup with rice) is the national dish, typically served with vegetable curry, pickles, and sometimes meat. Momos (dumplings) are another must-try favorite.</p>
+                    
+                    <h3>Regional Specialties</h3>
+                    <p>Each region offers unique dishes - Newari cuisine in Kathmandu Valley, Thakali food in the Mustang region, and Tibetan influences in the high mountains.</p>
+                    
+                    <h3>Street Food Delights</h3>
+                    <p>Explore local markets for chatpate, sel roti, and various fried snacks. Don't miss trying local teas and the potent tongba (millet beer) in the eastern hills.</p>
+                    
+                    <h3>Cooking Classes</h3>
+                    <p>Many places in Kathmandu and Pokhara offer cooking classes where you can learn to prepare traditional Nepali dishes to recreate at home.</p>
+                `
+            }
+        ];
+
+        function renderBlogPosts(filter = 'all') {
+            const blogGrid = document.getElementById('blogGrid');
+            blogGrid.innerHTML = '';
+            
+            const filteredPosts = filter === 'all' ? blogPosts : blogPosts.filter(post => post.category === filter);
+            
+            filteredPosts.forEach(post => {
+                const blogCard = document.createElement('div');
+                blogCard.className = 'blog-card';
+                blogCard.innerHTML = `
+                    <div class="blog-image" style="background-image: url('${post.image}')"></div>
+                    <div class="blog-content">
+                        <span class="blog-category">${post.category.charAt(0).toUpperCase() + post.category.slice(1)}</span>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> ${post.date}</span>
+                            <span><i class="far fa-clock"></i> ${post.readTime}</span>
+                        </div>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <button class="btn read-more-btn" data-id="${post.id}">Read More</button>
+                    </div>
+                `;
+                blogGrid.appendChild(blogCard);
+            });
+            
+            document.querySelectorAll('.read-more-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    openBlogPost(postId);
+                });
+            });
+        }
+
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    renderBlogPosts(filter);
+                });
+            });
+        }
+
+        function openBlogPost(postId) {
+            const post = blogPosts.find(p => p.id == postId);
+            if (post) {
+                sessionStorage.setItem('currentBlogPost', JSON.stringify(post));
+                window.location.href = 'blog-detail.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBlogPosts();
+            setupFilters();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal Odyssey - Trekking Adventures in the Himalayas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-modal.active {
+            display: flex;
+        }
+        
+        .login-container {
+            background: linear-gradient(145deg, #ffffff, #f5f7fa);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3a86ff, #8338ec);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .login-header h2 {
+            margin: 0;
+            color: #1a1a2e;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+        
+        .close-login {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .close-login:hover {
+            color: #1a1a2e;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .form-group input:focus {
+            border-color: #3a86ff;
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15);
+            outline: none;
+        }
+        
+        .form-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            color: #999;
+        }
+        
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 14px;
+            align-items: center;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #3a86ff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .forgot-password:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #3a86ff, #2563eb);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+        
+        .login-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .register-link a {
+            color: #3a86ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .register-link a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        
+        /* Login button in navbar */
+        .login-btn-nav {
+            background: linear-gradient(135deg, #3a86ff, #2563eb);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+        }
+        
+        .login-btn-nav:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(58, 134, 255, 0.4);
+        }
+        
+        .login-error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+            padding: 12px;
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            background-color: #fef2f2;
+        }
+        
+        .login-success {
+            color: #16a34a;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+            padding: 12px;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            background-color: #f0fdf4;
+        }
+        
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-left: 10px;
+            background: linear-gradient(135deg, #3a86ff, #8338ec);
+            padding: 8px 16px;
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .user-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: opacity 0.3s;
+            opacity: 0.8;
+        }
+        
+        .logout-btn:hover {
+            opacity: 1;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Hero Fullscreen Video */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        
+        .hero-slider {
+            height: 100%;
+        }
+        
+        .hero .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity .8s ease-in-out;
+        }
+        
+        .hero .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .slide-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .slide-content {
+            position: relative;
+            z-index: 3;
+            max-width: 600px;
+            margin-left: 50px;
+            margin-top: 25vh;
+            color: #fff;
+        }
+        
+        /* Modern Featured Treks */
+        .trek-results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .trek-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .trek-filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        
+        .trek-filter-btn.active,
+        .trek-filter-btn:hover {
+            background: linear-gradient(135deg, #3a86ff, #8338ec);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+        }
+        
+        .trek-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .trek-card-modern {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .trek-card-modern:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .trek-card-modern:hover .trek-image img {
+            transform: scale(1.1);
+        }
+        
+        .trek-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .trek-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .trek-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .trek-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .trek-difficulty {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .trek-difficulty.easy {
+            background: #10b981;
+        }
+        
+        .trek-difficulty.moderate {
+            background: #f59e0b;
+        }
+        
+        .trek-difficulty.challenging {
+            background: #ef4444;
+        }
+        
+        .trek-difficulty.strenuous {
+            background: #7c3aed;
+        }
+        
+        .trek-duration {
+            color: white;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .trek-content {
+            padding: 1.5rem;
+        }
+        
+        .trek-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        
+        .trek-region {
+            color: #3a86ff;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .trek-region i {
+            font-size: 0.9rem;
+        }
+        
+        .trek-description {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .trek-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight-tag {
+            background: rgba(58, 134, 255, 0.1);
+            color: #3a86ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .trek-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .trek-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            position: relative;
+        }
+        
+        .trek-price::before {
+            content: '$';
+            font-size: 1rem;
+            vertical-align: super;
+            margin-right: 2px;
+        }
+        
+        .trek-season {
+            color: #6c757d;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .trek-season i {
+            color: #10b981;
+        }
+        
+        .trek-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .trek-actions .btn {
+            flex: 1;
+        }
+        
+        .bookmark-btn {
+            width: 50px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            color: #6c757d;
+        }
+        
+        .bookmark-btn:hover {
+            background: #3a86ff;
+            border-color: #3a86ff;
+            color: white;
+        }
+        
+        .bookmark-btn.active {
+            background: #3a86ff;
+            border-color: #3a86ff;
+            color: white;
+        }
+        
+        .trek-loading {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .no-treks {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+            grid-column: 1 / -1;
+        }
+        
+        .trek-count {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        
+        .trek-count strong {
+            color: #3a86ff;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .trek-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .trek-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .trek-filter-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .slide-content {
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-top: 20vh;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .trek-actions {
+                flex-direction: column;
+            }
+            
+            .bookmark-btn {
+                width: 100%;
+                height: 45px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+.logo i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+}
+
+[data-theme="dark"] .logo {
+    color: var(--light-color);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    position: relative;
+    margin: 0 1rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--light-color);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link i {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+    list-style: none;
+    z-index: 100;
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background: var(--dark-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+[data-theme="dark"] .dropdown-menu li a {
+    color: var(--light-color);
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(58, 134, 255, 0.1);
+    color: var(--primary-color);
+
+}
+/* full-screen overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 10px; /* small padding on mobile */
+}
+
+/* popup box */
+.popup-box {
+  position: relative;
+  background: white;
+  padding: 10px;
+  border-radius: 16px;
+  max-width: 600px; /* max size on large screens */
+  width: 90%;       /* responsive for smaller screens */
+  max-height: 90vh; /* prevent overflow */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  animation: popupScale .35s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* poster image */
+.poster-img {
+  width: 100%;   /* fits inside popup box */
+  height: auto;  /* maintains aspect ratio */
+  border-radius: 12px;
+  display: block;
+  max-height: 80vh; /* prevent image from overflowing vertically */
+}
+
+/* close button */
+.close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+}
+
+/* smooth scale animation */
+@keyframes popupScale {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+    </style>
+</head>
+<body>
+<!-- Popup Poster -->
+<div id="poster-popup" class="popup-overlay">
+  <div class="popup-box">
+    <span id="close-popup" class="close-btn">&times;</span>
+
+    <!-- 🎄 Poster Image -->
+    <img src="./poster.jpg" alt="Merry Christmas Poster" class="poster-img">
+
+  </div>
+</div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-mountain"></i>
+                        <span>Nepal Odyssey</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="./index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="./packages.html" class="nav-link">Packages<i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="customtrip.html">Custom Trip</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link">Gallery</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="about.html" class="nav-link">About <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="./guides(1).html">Our Guides</a></li>
+                            <li><a href="legal.html">Legal Documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="user-profile" id="userProfile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-name" id="userName">User</span>
+                        <button class="logout-btn" id="logoutBtn" aria-label="Logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                    <button class="login-btn-nav" id="loginBtn" aria-label="Open login modal">
+                        <i class="fas fa-user"></i> Login
+                    </button>
+                    <div class="hamburger">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginHeader">
+        <div class="login-container">
+            <div class="login-header">
+                <h2 id="loginHeader">Login to Your Account</h2>
+                <button class="close-login" id="closeLogin" aria-label="Close login modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required autocomplete="email">
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+                <div class="login-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <div class="login-error" id="loginError" role="alert">
+                    Invalid email or password. Please try again.
+                </div>
+                <div class="login-success" id="loginSuccess" role="alert">
+                    Login successful! Redirecting...
+                </div>
+                <button type="submit" class="login-btn" id="loginSubmitBtn" aria-live="polite">
+                    <span id="loginBtnText">Login</span>
+                    <div class="loading-spinner" id="loginSpinner" role="status" aria-label="Logging in"></div>
+                </button>
+                <div class="register-link">
+                    Don't have an account? <a href="#" id="showRegister">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="slide active">
+                <video autoplay muted loop class="slide-video">
+                    <source src="./WhatsApp Video 2025-11-25 at 20.47.35_97f47719.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="slide-content">
+                    <h1 class="hero-title">Discover the Majesty of Nepal</h1>
+                    <p class="hero-subtitle">Experience the world's highest peaks, ancient cultures, and breathtaking landscapes</p>
+                    <div class="hero-buttons">
+                        <a href="packages.html" class="btn btn-primary">Explore Treks</a>
+                        <a href="customtrip.html" class="btn btn-secondary">Custom Trip</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <video autoplay muted loop class="slide-video">
+                    <source src="./WhatsApp Video 2025-11-27 at 04.16.28_67be0351.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="slide-content">
+                    <h1 class="hero-title">Annapurna Sanctuary Trek</h1>
+                    <p class="hero-subtitle">Journey to the heart of the Himalayas through lush forests and traditional villages</p>
+                    <div class="hero-buttons">
+                        <a href="abc.html" class="btn btn-primary">View Details</a>
+                        <a href="packages.html" class="btn btn-secondary">All Packages</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <video autoplay muted loop class="slide-video">
+                    <source src="./WhatsApp Video 2025-11-27 at 04.14.30_48e2a1fb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="slide-content">
+                    <h1 class="hero-title">Cultural Heritage of Kathmandu</h1>
+                    <p class="hero-subtitle">Explore ancient temples, palaces, and vibrant markets in the capital city</p>
+                    <div class="hero-buttons">
+                        <a href="./ktm.html" class="btn btn-primary">City Tours</a>
+                        <a href="./packages.html" class="btn btn-secondary">More Destinations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="slider-btn prev" id="prevSlide" aria-label="Previous slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next" id="nextSlide" aria-label="Next slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="slider-dots" id="sliderDots" role="tablist">
+            <span class="dot active" role="tab" aria-selected="true" aria-controls="slide-0" tabindex="0"></span>
+            <span class="dot" role="tab" aria-selected="false" aria-controls="slide-1" tabindex="-1"></span>
+            <span class="dot" role="tab" aria-selected="false" aria-controls="slide-2" tabindex="-1"></span>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <h2 class="section-title">Find Your Perfect Trek</h2>
+                <div class="search-box">
+                    <input type="text" id="trekSearch" placeholder="Search treks, destinations, regions..." aria-label="Search treks">
+                    <button class="search-btn" aria-label="Execute search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-group">
+                        <label for="difficultyFilter">Difficulty</label>
+                        <select id="difficultyFilter">
+                            <option value="all">All Levels</option>
+                            <option value="easy">Easy</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="challenging">Challenging</option>
+                            <option value="strenuous">Strenuous</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="durationFilter">Duration</label>
+                        <select id="durationFilter">
+                            <option value="all">Any Duration</option>
+                            <option value="1-7">1-7 Days</option>
+                            <option value="8-14">8-14 Days</option>
+                            <option value="15-21">15-21 Days</option>
+                            <option value="22+">22+ Days</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="priceFilter">Max Price</label>
+                        <select id="priceFilter">
+                            <option value="all">Any Price</option>
+                            <option value="500">Under $500</option>
+                            <option value="1000">Under $1000</option>
+                            <option value="1500">Under $1500</option>
+                            <option value="2000">Under $2000</option>
+                            <option value="2500+">$2500+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="seasonFilter">Best Season</label>
+                        <select id="seasonFilter">
+                            <option value="all">All Seasons</option>
+                            <option value="spring">Spring (Mar-May)</option>
+                            <option value="autumn">Autumn (Sep-Nov)</option>
+                            <option value="winter">Winter (Dec-Feb)</option>
+                            <option value="summer">Summer (Jun-Aug)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button id="applyFilters" class="btn btn-primary">Apply Filters</button>
+                    <button id="resetFilters" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Treks Section -->
+    <section class="featured-treks">
+        <div class="container">
+            <h2 class="section-title">Featured Treks</h2>
+            <p class="section-subtitle">Our most popular Himalayan adventures</p>
+            
+            <!-- Trek Filter Buttons -->
+            <div class="trek-filters" id="trekFilters">
+                <button class="trek-filter-btn active" data-filter="all">All Treks</button>
+                <button class="trek-filter-btn" data-filter="everest">Everest Region</button>
+                <button class="trek-filter-btn" data-filter="annapurna">Annapurna Region</button>
+                <button class="trek-filter-btn" data-filter="langtang">Langtang Region</button>
+                <button class="trek-filter-btn" data-filter="mustang">Mustang Region</button>
+            </div>
+            
+            <!-- Trek Count -->
+            <div class="trek-count" id="trekCount">
+                Showing <strong id="trekCountNumber">0</strong> of <strong id="totalTreks">0</strong> treks
+            </div>
+            
+            <!-- Treks Grid -->
+            <div class="trek-grid" id="treksGrid">
+                <div class="trek-loading">
+                    <i class="fas fa-spinner fa-spin fa-2x" style="color: #3a86ff; margin-bottom: 1rem;"></i>
+                    <p>Loading treks...</p>
+                </div>
+            </div>
+            
+            <div class="view-all">
+                <a href="packages.html" class="btn btn-outline">View All Treks</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Destinations Section -->
+    <section class="popular" id="destination">
+        <div class="container">
+            <p class="section-subtitle">Uncover place</p>
+            <h2 class="section-title">Popular Destinations</h2>
+            <p class="section-text">
+                From the world's highest peaks to ancient cultural sites, Nepal offers diverse destinations that will captivate every traveler.
+            </p>
+            <ul class="popular-list">
+                <li>
+                    <div class="popular-card">
+                        <figure class="card-img">
+                            <img src="./WhatsApp Image 2025-11-27 at 05.22.13_029af8e5.jpg" alt="Everest Base Camp, Nepal" loading="lazy">
+                        </figure>
+                        <div class="card-content">
+                            <div class="card-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="card-subtitle">
+                                <a href="ebc.html">Everest Region</a>
+                            </p>
+                            <h3 class="card-title">
+                                <a href="ebc.html">Everest Base Camp</a>
+                            </h3>
+                            <p class="card-text">
+                                Trek to the foot of the world's highest mountain through Sherpa villages and breathtaking landscapes.
+                            </p>
+                            <a href="ebc.html" class="btn btn-outline read-more">Read More</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="popular-card">
+                        <figure class="card-img">
+                            <img src="./WhatsApp Image 2025-11-27 at 05.22.21_03a91077.jpg" alt="Annapurna Circuit, Nepal" loading="lazy">
+                        </figure>
+                        <div class="card-content">
+                            <div class="card-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="card-subtitle">
+                                <a href="abc.html">Annapurna Region</a>
+                            </p>
+                            <h3 class="card-title">
+                                <a href="abc.html">Annapurna Circuit</a>
+                            </h3>
+                            <p class="card-text">
+                                Experience diverse landscapes from subtropical forests to high mountain passes on this classic trek.
+                            </p>
+                            <a href="abc.html" class="btn btn-outline read-more">Read More</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="popular-card">
+                        <figure class="card-img">
+                            <img src="./WhatsApp Image 2025-11-27 at 05.22.22_8c841458.jpg" alt="Patan Durbar Square, Nepal" loading="lazy">
+                        </figure>
+                        <div class="card-content">
+                            <div class="card-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="card-subtitle">
+                                <a href="ktm.html">Kathmandu Valley</a>
+                            </p>
+                            <h3 class="card-title">
+                                <a href="ktm.html">Patan Durbar Square</a>
+                            </h3>
+                            <p class="card-text">
+                                Explore ancient temples, palaces, and intricate woodwork in this UNESCO World Heritage Site.
+                            </p>
+                            <a href="ktm.html" class="btn btn-outline read-more">Read More</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="view-all">
+                <a href="destinations.html" class="btn btn-primary">More Destinations</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose">
+        <div class="container">
+            <h2 class="section-title">Your Himalayan Journey Starts Here</h2>
+            <p class="section-subtitle">Experience Nepal like never before with our expert guidance</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hiking"></i>
+                    </div>
+                    <h3>Unforgettable Adventures</h3>
+                    <p>Carefully crafted treks that take you beyond the ordinary, revealing hidden gems and authentic cultural experiences.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Local Expertise</h3>
+                    <p>Our Nepali guides share intimate knowledge of trails, culture, and traditions that enrich every step of your journey.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Safety First</h3>
+                    <p>Comprehensive safety protocols, emergency plans, and well-maintained equipment ensure your peace of mind.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Community Connection</h3>
+                    <p>We directly support local communities through fair employment and sustainable tourism practices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>Breathtaking Routes</h3>
+                    <p>Access remote trails and stunning viewpoints that showcase Nepal's unparalleled natural beauty.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h3>Personalized Service</h3>
+                    <p>From arrival to departure, we handle every detail so you can focus on the experience of a lifetime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Travelers Say</h2>
+            <div class="testimonials-slider" id="testimonialsSlider">
+                <div class="testimonial active">
+                    <div class="testimonial-content">
+                        <p>"The Everest Base Camp trek with Nepal Odyssey was the experience of a lifetime. Our guide was knowledgeable, the scenery breathtaking, and everything was perfectly organized."</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sarah Johnson">
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <span>Everest Base Camp Trek</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"I did the Annapurna Circuit with Nepal Odyssey and was blown away by the professionalism of the team. They took care of every detail, allowing me to fully immerse in the beauty of Nepal."</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Michael Chen">
+                            <div class="author-info">
+                                <h4>Michael Chen</h4>
+                                <span>Annapurna Circuit Trek</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"As a solo female traveler, safety was my top priority. Nepal Odyssey provided an exceptional guide who made me feel secure while showing me the hidden gems of the Langtang Valley."</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Emma Wilson">
+                            <div class="author-info">
+                                <h4>Emma Wilson</h4>
+                                <span>Langtang Valley Trek</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <button class="testimonial-btn prev" id="prevTestimonial" aria-label="Previous testimonial">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonial-dots" id="testimonialDots" role="tablist">
+                    <span class="dot active" role="tab" aria-selected="true" aria-controls="testimonial-0" tabindex="0"></span>
+                    <span class="dot" role="tab" aria-selected="false" aria-controls="testimonial-1" tabindex="-1"></span>
+                    <span class="dot" role="tab" aria-selected="false" aria-controls="testimonial-2" tabindex="-1"></span>
+                </div>
+                <button class="testimonial-btn next" id="nextTestimonial" aria-label="Next testimonial">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated on Nepal Treks</h2>
+                <p>Subscribe to our newsletter for trekking tips, special offers, and new routes</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Your email address" required aria-label="Your email address for newsletter subscription">
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <a href="index.html" class="logo">
+                            <i class="fas fa-mountain"></i>
+                            <span>Nepal Odyssey</span>
+                        </a>
+                    </div>
+                    <p>Your trusted partner for unforgettable Himalayan adventures since 2006.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="trekking.html">Trekking</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Treks</h3>
+                    <ul>
+                        <li><a href="ebc.html">Everest Base Camp</a></li>
+                        <li><a href="abc.html">Annapurna Base Camp</a></li>
+                        <li><a href="langtang.html">Langtang Valley</a></li>
+                        <li><a href="mardi.html">Mardi Himal</a></li>
+                        <li><a href="upmustang.html">Upper Mustang</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Thamel, Kathmandu, Nepal</li>
+                        <li><i class="fas fa-phone"></i> +977 1 1234567</li>
+                        <li><i class="fas fa-envelope"></i> info@nepalodyssey.com</li>
+                        <li><i class="fas fa-clock"></i> Sun-Fri: 9AM - 6PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nepal Odyssey. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+// show popup when page loads
+window.addEventListener("load", () => {
+  document.getElementById("poster-popup").style.display = "flex";
+});
+
+// close popup when X clicked
+document.getElementById("close-popup").addEventListener("click", () => {
+  document.getElementById("poster-popup").style.display = "none";
+});
+</script>
+
+
+    <!-- JSON Data Script -->
+    <script type="application/json" id="treksData">
+        {
+            "treks": [
+                {
+                    "id": 1,
+                    "name": "Everest Base Camp Trek",
+                    "region": "Everest",
+                    "difficulty": "challenging",
+                    "duration": "14 days",
+                    "price": 1450,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1544735716-2f8e3bf5f383?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "Trek to the foot of the world's highest mountain through Sherpa villages and breathtaking landscapes.",
+                    "highlights": ["Kala Patthar viewpoint", "Tengboche Monastery", "Namche Bazaar", "Sherpa Culture"]
+                },
+                {
+                    "id": 2,
+                    "name": "Annapurna Circuit",
+                    "region": "Annapurna",
+                    "difficulty": "moderate",
+                    "duration": "18 days",
+                    "price": 1250,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1580509241350-c599189276c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "Experience diverse landscapes from subtropical forests to high mountain passes on this classic trek.",
+                    "highlights": ["Thorong La Pass", "Muktinath Temple", "Manang Valley", "Hot Springs"]
+                },
+                {
+                    "id": 3,
+                    "name": "Langtang Valley Trek",
+                    "region": "Langtang",
+                    "difficulty": "moderate",
+                    "duration": "10 days",
+                    "price": 850,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1627647238169-1e13ce1ec68b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "A beautiful trek through the Langtang Valley with stunning mountain views and Tamang culture.",
+                    "highlights": ["Langtang National Park", "Kyanjin Gompa", "Cheese Factory", "Tamang Heritage"]
+                },
+                {
+                    "id": 4,
+                    "name": "Manaslu Circuit Trek",
+                    "region": "Everest",
+                    "difficulty": "challenging",
+                    "duration": "16 days",
+                    "price": 1350,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1564507004663-b6dfb3c824d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "A remote and culturally rich trek around the eighth highest mountain in the world.",
+                    "highlights": ["Larkya La Pass", "Tsum Valley", "Traditional Villages", "Buddhist Monasteries"]
+                },
+                {
+                    "id": 5,
+                    "name": "Upper Mustang Trek",
+                    "region": "Mustang",
+                    "difficulty": "moderate",
+                    "duration": "14 days",
+                    "price": 1750,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1580509241368-5b8e3f4d6b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "Explore the ancient kingdom of Mustang with its unique Tibetan culture and desert landscapes.",
+                    "highlights": ["Lo Manthang", "Cave Dwellings", "Tibetan Culture", "Desert Landscape"]
+                },
+                {
+                    "id": 6,
+                    "name": "Mardi Himal Trek",
+                    "region": "Annapurna",
+                    "difficulty": "moderate",
+                    "duration": "8 days",
+                    "price": 750,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "A relatively new trek offering spectacular views of the Annapurna range without the crowds.",
+                    "highlights": ["Mardi Himal Base Camp", "Forest Camp", "High Camp", "Panoramic Views"]
+                },
+                {
+                    "id": 7,
+                    "name": "Ghorepani Poon Hill Trek",
+                    "region": "Annapurna",
+                    "difficulty": "easy",
+                    "duration": "5 days",
+                    "price": 450,
+                    "bestSeason": "All Year",
+                    "image": "https://images.unsplash.com/photo-1564507004663-b6dfb3c824d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "A short and scenic trek perfect for beginners with spectacular sunrise views over the Annapurna range.",
+                    "highlights": ["Poon Hill Sunrise", "Rhododendron Forests", "Ghandruk Village", "Easy Trekking"]
+                },
+                {
+                    "id": 8,
+                    "name": "Rara Lake Trek",
+                    "region": "Langtang",
+                    "difficulty": "moderate",
+                    "duration": "10 days",
+                    "price": 950,
+                    "bestSeason": "Spring, Autumn",
+                    "image": "https://images.unsplash.com/photo-1580509241368-5b8e3f4d6b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    "description": "Journey to Nepal's largest lake set in the remote wilderness of western Nepal.",
+                    "highlights": ["Rara Lake", "Rara National Park", "Remote Wilderness", "Bird Watching"]
+                }
+            ]
+        }
+    </script>
+
+    <script>
+        // User Authentication
+        const USERS_KEY = 'nepalOdysseyUsers';
+        
+        function initializeUsers() {
+            if (!localStorage.getItem(USERS_KEY)) {
+                const defaultUsers = [
+                    { id: 1, name: 'Demo User', email: 'demo@nepalodyssey.com', password: 'password123' }
+                ];
+                localStorage.setItem(USERS_KEY, JSON.stringify(defaultUsers));
+            }
+        }
+        
+        function getUsers() {
+            return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+        }
+        
+        function saveUsers(users) {
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+        
+        function findUserByEmail(email) {
+            const users = getUsers();
+            return users.find(user => user.email === email);
+        }
+        
+        function addUser(name, email, password) {
+            const users = getUsers();
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                password
+            };
+            users.push(newUser);
+            saveUsers(users);
+            return newUser;
+        }
+        
+        function isLoggedIn() {
+            return localStorage.getItem('currentUser') !== null;
+        }
+        
+        function getCurrentUser() {
+            const userData = localStorage.getItem('currentUser');
+            return userData ? JSON.parse(userData) : null;
+        }
+        
+        function setCurrentUser(user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+        
+        function removeCurrentUser() {
+            localStorage.removeItem('currentUser');
+        }
+        
+        function updateUIForLoginStatus() {
+            const loginBtn = document.getElementById('loginBtn');
+            const userProfile = document.getElementById('userProfile');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                loginBtn.style.display = 'none';
+                userProfile.style.display = 'flex';
+                const firstName = user.name.split(' ')[0];
+                userAvatar.textContent = firstName.charAt(0).toUpperCase();
+                userName.textContent = firstName;
+            } else {
+                loginBtn.style.display = 'flex';
+                userProfile.style.display = 'none';
+            }
+        }
+        
+        // Login Modal Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeLogin = document.getElementById('closeLogin');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const loginSuccess = document.getElementById('loginSuccess');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+        const loginSpinner = document.getElementById('loginSpinner');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const showRegister = document.getElementById('showRegister');
+
+        // Login Modal Functions
+        function closeLoginModal() {
+            loginModal.classList.remove('active');
+            hideMessages();
+            loginForm.reset();
+        }
+        
+        function initApp() {
+            initializeUsers();
+            updateUIForLoginStatus();
+        }
+        
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.add('active');
+            hideMessages();
+        });
+        
+        closeLogin.addEventListener('click', closeLoginModal);
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                closeLoginModal();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+                closeLoginModal();
+            }
+        });
+        
+        function hideMessages() {
+            loginError.style.display = 'none';
+            loginSuccess.style.display = 'none';
+        }
+        
+        function showLoginLoading() {
+            loginBtnText.style.display = 'none';
+            loginSpinner.style.display = 'block';
+            loginSubmitBtn.disabled = true;
+        }
+        
+        function hideLoginLoading() {
+            loginBtnText.style.display = 'block';
+            loginSpinner.style.display = 'none';
+            loginSubmitBtn.disabled = false;
+        }
+        
+        // Login Form Submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            hideMessages();
+            showLoginLoading();
+            
+            setTimeout(() => {
+                const user = findUserByEmail(email);
+                
+                if (user && user.password === password) {
+                    setCurrentUser(user);
+                    loginSuccess.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        closeLoginModal();
+                        updateUIForLoginStatus();
+                        hideLoginLoading();
+                    }, 1500);
+                } else {
+                    loginError.textContent = 'Invalid email or password. Please try again.';
+                    loginError.style.display = 'block';
+                    hideLoginLoading();
+                }
+            }, 1500);
+        });
+        
+        // Logout functionality
+        logoutBtn.addEventListener('click', () => {
+            removeCurrentUser();
+            updateUIForLoginStatus();
+        });
+        
+        // Register link - simple alert
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Registration feature coming soon! For now, use demo@nepalodyssey.com / password123');
+        });
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', initApp);
+        
+        // Hero Video Slider
+        const heroSlider = document.getElementById('heroSlider');
+        const slides = heroSlider.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dots .dot');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                slide.setAttribute('id', `slide-${i}`);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.remove('active');
+                dot.setAttribute('aria-controls', `slide-${i}`);
+                dot.setAttribute('aria-selected', 'false');
+                dot.setAttribute('tabindex', '-1');
+            });
+            
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            dots[currentSlide].setAttribute('aria-selected', 'true');
+            dots[currentSlide].setAttribute('tabindex', '0');
+        }
+        
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+        
+        // Auto-advance slides
+        let slideInterval = setInterval(() => showSlide(currentSlide + 1), 8000);
+        
+        // Testimonials Slider
+        const testimonialsSlider = document.getElementById('testimonialsSlider');
+        const testimonialSlides = testimonialsSlider.querySelectorAll('.testimonial');
+        const testimonialDots = document.querySelectorAll('.testimonial-dots .dot');
+        const prevTestimonialBtn = document.getElementById('prevTestimonial');
+        const nextTestimonialBtn = document.getElementById('nextTestimonial');
+        let currentTestimonial = 0;
+        
+        function showTestimonial(index) {
+            testimonialSlides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                slide.setAttribute('id', `testimonial-${i}`);
+            });
+            testimonialDots.forEach((dot, i) => {
+                dot.classList.remove('active');
+                dot.setAttribute('aria-controls', `testimonial-${i}`);
+                dot.setAttribute('aria-selected', 'false');
+                dot.setAttribute('tabindex', '-1');
+            });
+            
+            currentTestimonial = (index + testimonialSlides.length) % testimonialSlides.length;
+            testimonialSlides[currentTestimonial].classList.add('active');
+            testimonialDots[currentTestimonial].classList.add('active');
+            testimonialDots[currentTestimonial].setAttribute('aria-selected', 'true');
+            testimonialDots[currentTestimonial].setAttribute('tabindex', '0');
+        }
+        
+        prevTestimonialBtn.addEventListener('click', () => showTestimonial(currentTestimonial - 1));
+        nextTestimonialBtn.addEventListener('click', () => showTestimonial(currentTestimonial + 1));
+        
+        // Auto-advance testimonials
+        let testimonialInterval = setInterval(() => showTestimonial(currentTestimonial + 1), 6000);
+        
+        // Featured Treks System
+        const treksGrid = document.getElementById('treksGrid');
+        const treksData = JSON.parse(document.getElementById('treksData').textContent);
+        const trekFilters = document.getElementById('trekFilters');
+        const trekCountNumber = document.getElementById('trekCountNumber');
+        const totalTreks = document.getElementById('totalTreks');
+        
+        // Initialize trek count
+        totalTreks.textContent = treksData.treks.length;
+        
+        // Function to get trek region for filtering
+        function getTrekRegion(trekName, description) {
+            const regionMap = {
+                'everest': ['everest', 'manaslu', 'kanchenjunga'],
+                'annapurna': ['annapurna', 'mardi', 'poon hill', 'ghorepani'],
+                'langtang': ['langtang', 'helambu', 'rara'],
+                'mustang': ['mustang', 'dolpo', 'nar phu']
+            };
+            
+            const text = (trekName + ' ' + description).toLowerCase();
+            
+            for (const [region, keywords] of Object.entries(regionMap)) {
+                if (keywords.some(keyword => text.includes(keyword))) {
+                    return region;
+                }
+            }
+            return 'everest'; // default
+        }
+        
+        // Display treks with modern design
+        function displayTreks(treks, regionFilter = 'all') {
+            treksGrid.innerHTML = '';
+            
+            if (treks.length === 0) {
+                treksGrid.innerHTML = `
+                    <div class="no-treks">
+                        <i class="fas fa-mountain fa-3x" style="color: #e9ecef; margin-bottom: 1rem;"></i>
+                        <p>No treks found matching your criteria. Try adjusting your filters.</p>
+                    </div>
+                `;
+                trekCountNumber.textContent = '0';
+                return;
+            }
+            
+            const filteredTreks = regionFilter === 'all' 
+                ? treks 
+                : treks.filter(trek => getTrekRegion(trek.name, trek.description) === regionFilter);
+            
+            trekCountNumber.textContent = filteredTreks.length;
+            
+            filteredTreks.forEach(trek => {
+                const trekCard = document.createElement('div');
+                trekCard.className = 'trek-card-modern';
+                trekCard.innerHTML = `
+                    <div class="trek-image">
+                        <img src="${trek.image}" alt="${trek.name}" loading="lazy">
+                        <div class="trek-overlay">
+                            <div class="trek-info">
+                                <span class="trek-difficulty ${trek.difficulty}">${trek.difficulty.charAt(0).toUpperCase() + trek.difficulty.slice(1)}</span>
+                                <span class="trek-duration">${trek.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trek-content">
+                        <h3 class="trek-name">${trek.name}</h3>
+                        <p class="trek-region">
+                            <i class="fas fa-map-marker-alt"></i> ${trek.region} Region
+                        </p>
+                        <p class="trek-description">${trek.description}</p>
+                        <div class="trek-highlights">
+                            ${trek.highlights.slice(0, 3).map(highlight => 
+                                `<span class="highlight-tag">${highlight}</span>`
+                            ).join('')}
+                        </div>
+                        <div class="trek-meta">
+                            <div class="trek-price">${trek.price}</div>
+                            <div class="trek-season">
+                                <i class="fas fa-calendar-alt"></i> Best: ${trek.bestSeason}
+                            </div>
+                        </div>
+                        <div class="trek-actions">
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <button class="btn bookmark-btn" aria-label="Bookmark this trek">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                treksGrid.appendChild(trekCard);
+            });
+            
+            // Add bookmark functionality
+            document.querySelectorAll('.bookmark-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.classList.toggle('active');
+                    this.querySelector('i').classList.toggle('far');
+                    this.querySelector('i').classList.toggle('fas');
+                    
+                    const trekName = this.closest('.trek-card-modern').querySelector('.trek-name').textContent;
+                    if (this.classList.contains('active')) {
+                        alert(`Added "${trekName}" to your bookmarks!`);
+                    } else {
+                        alert(`Removed "${trekName}" from bookmarks.`);
+                    }
+                });
+            });
+            
+            // Add view details functionality
+            document.querySelectorAll('.trek-actions .btn-primary').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const trekName = this.closest('.trek-card-modern').querySelector('.trek-name').textContent;
+                    alert(`Redirecting to "${trekName}" details page...\n\nIn a real implementation, this would take you to a dedicated page with full trek details, booking options, and more information.`);
+                });
+            });
+        }
+        
+        // Setup trek filters
+        function setupTrekFilters() {
+            const filterButtons = trekFilters.querySelectorAll('.trek-filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    displayTreks(treksData.treks, filter);
+                });
+            });
+        }
+        
+        // Trek search and filter functionality
+        const searchInput = document.getElementById('trekSearch');
+        const difficultyFilter = document.getElementById('difficultyFilter');
+        const durationFilter = document.getElementById('durationFilter');
+        const priceFilter = document.getElementById('priceFilter');
+        const seasonFilter = document.getElementById('seasonFilter');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const resetFiltersBtn = document.getElementById('resetFilters');
+        
+        function getTrekDays(durationString) {
+            const match = durationString.match(/^(\d+)/);
+            return match ? parseInt(match[1]) : 0;
+        }
+        
+        function filterTreks() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const difficultyValue = difficultyFilter.value.toLowerCase();
+            const durationValue = durationFilter.value;
+            const priceValue = priceFilter.value;
+            const seasonValue = seasonFilter.value.toLowerCase();
+            
+            const filteredTreks = treksData.treks.filter(trek => {
+                // Search filter
+                const matchesSearch = trek.name.toLowerCase().includes(searchTerm) || 
+                                    trek.description.toLowerCase().includes(searchTerm) ||
+                                    trek.region.toLowerCase().includes(searchTerm);
+                
+                // Difficulty filter
+                const matchesDifficulty = difficultyValue === 'all' || trek.difficulty === difficultyValue;
+                
+                // Duration filter
+                let matchesDuration = true;
+                if (durationValue !== 'all') {
+                    const trekDays = getTrekDays(trek.duration);
+                    
+                    if (durationValue.includes('-')) {
+                        const [minStr, maxStr] = durationValue.split('-');
+                        const min = parseInt(minStr);
+                        const max = parseInt(maxStr);
+                        matchesDuration = trekDays >= min && trekDays <= max;
+                    } else if (durationValue.includes('+')) {
+                        const min = parseInt(durationValue);
+                        matchesDuration = trekDays >= min;
+                    }
+                }
+                
+                // Price filter
+                let matchesPrice = true;
+                if (priceValue !== 'all') {
+                    const trekPrice = trek.price;
+                    if (priceValue.includes('+')) {
+                        matchesPrice = trekPrice >= parseInt(priceValue);
+                    } else {
+                        matchesPrice = trekPrice <= parseInt(priceValue);
+                    }
+                }
+                
+                // Season filter
+                const matchesSeason = seasonValue === 'all' || 
+                                    trek.bestSeason.toLowerCase().includes(seasonValue);
+                
+                return matchesSearch && matchesDifficulty && matchesDuration && matchesPrice && matchesSeason;
+            });
+            
+            displayTreks(filteredTreks);
+        }
+        
+        // Initial display of treks
+        displayTreks(treksData.treks);
+        setupTrekFilters();
+        
+        // Event listeners for filters
+        applyFiltersBtn.addEventListener('click', filterTreks);
+        searchInput.addEventListener('input', filterTreks);
+        difficultyFilter.addEventListener('change', filterTreks);
+        durationFilter.addEventListener('change', filterTreks);
+        priceFilter.addEventListener('change', filterTreks);
+        seasonFilter.addEventListener('change', filterTreks);
+        
+        resetFiltersBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            difficultyFilter.value = 'all';
+            durationFilter.value = 'all';
+            priceFilter.value = 'all';
+            seasonFilter.value = 'all';
+            displayTreks(treksData.treks);
+            
+            // Reset filter buttons
+            const filterButtons = trekFilters.querySelectorAll('.trek-filter-btn');
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            trekFilters.querySelector('[data-filter="all"]').classList.add('active');
+        });
+        
+        // Newsletter Form Submission
+        const newsletterForm = document.getElementById('newsletterForm');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input[type="email"]').value;
+            alert(`Thank you for subscribing with ${email}! You'll receive our latest trekking updates and special offers.`);
+            newsletterForm.reset();
+        });
+        
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Handle dropdowns on mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    const dropdown = link.parentElement;
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

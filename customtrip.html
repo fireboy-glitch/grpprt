@@ -1,0 +1,3665 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mountain Adventure Planner - Multi-Country Travel Planning</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&amp;family=Kalam:wght@300;400;700&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    .logo-section {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+        transform: translateY(-2px);
+    }
+    
+    .logo i {
+        color: #3a86ff;
+        margin-right: 0.5rem;
+        font-size: 2.2rem;
+    }
+    
+    .logo-section p {
+        color: #6c757d;
+        font-size: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 1rem 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .nav-logo .logo {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+    
+    .nav-logo .logo i {
+        font-size: 1.8rem;
+    }
+    
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nav-item {
+        position: relative;
+    }
+    
+    .nav-link {
+        text-decoration: none;
+        color: #1a1a2e;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+        color: #3a86ff;
+    }
+    
+    .nav-link i {
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .dropdown:hover .nav-link i {
+        transform: rotate(180deg);
+    }
+    
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        min-width: 220px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        padding: 0.75rem 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        list-style: none;
+        z-index: 100;
+    }
+    
+    .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .dropdown-menu li a {
+        display: block;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: #1a1a2e;
+        transition: all 0.3s ease;
+        font-weight: 400;
+    }
+    
+    .dropdown-menu li a:hover {
+        background: rgba(58, 134, 255, 0.1);
+        color: #3a86ff;
+        padding-left: 2rem;
+    }
+    
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .login-btn-nav {
+        background: linear-gradient(135deg, #3a86ff, #2563eb);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+    }
+    
+    .login-btn-nav:hover {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(58, 134, 255, 0.4);
+    }
+    
+    .user-profile {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #3a86ff, #8338ec);
+        padding: 8px 16px;
+        border-radius: 10px;
+        color: white;
+    }
+    
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .user-name {
+        font-weight: 500;
+        font-size: 14px;
+    }
+    
+    .logout-btn {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        transition: opacity 0.3s;
+        opacity: 0.8;
+    }
+    
+    .logout-btn:hover {
+        opacity: 1;
+    }
+    
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+    }
+    
+    .bar {
+        width: 25px;
+        height: 3px;
+        background: #1a1a2e;
+        margin: 3px 0;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    body {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+      background: #ffffff;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      min-height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+    }
+
+    .logo-text h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #1e40af;
+      margin-bottom: 0.25rem;
+    }
+
+    .logo-text p {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 0.625rem 1.25rem;
+      border: 2px solid #e2e8f0;
+      background: #ffffff;
+      color: #334155;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn:hover {
+      border-color: #1e40af;
+      color: #1e40af;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.active {
+      background: #1e40af;
+      color: #ffffff;
+      border-color: #1e40af;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1e40af 0%, #0d9488 100%);
+      color: #ffffff;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '🏔️';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.08;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      display: block;
+    }
+
+    .hero-stat-label {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .main-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tab-navigation {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      background: #f8fafc;
+      padding: 0.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.875rem 1.5rem;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tab-btn:hover {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .tab-btn.active {
+      background: #1e40af;
+      color: #ffffff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e2e8f0;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-description {
+      color: #64748b;
+      font-size: 0.9375rem;
+    }
+
+    .two-column-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .map-container {
+      height: 550px;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #e2e8f0;
+      position: relative;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    #nepal-map {
+      height: 100%;
+      width: 100%;
+    }
+
+    .map-controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 500;
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    .map-control-btn {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      padding: 0.625rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.125rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-control-btn:hover {
+      background: #1e40af;
+      color: #ffffff;
+      border-color: #1e40af;
+    }
+
+    .config-item {
+      background: #f8fafc;
+      padding: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .config-item:hover {
+      border-color: #1e40af;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+    }
+
+    .config-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.875rem;
+      font-size: 0.9375rem;
+    }
+
+    .config-label i {
+      color: #1e40af;
+      font-size: 1rem;
+    }
+
+    .slider-container {
+      width: 100%;
+    }
+
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 6px;
+      background: #e2e8f0;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1e40af;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      background: #1e3a8a;
+      transform: scale(1.15);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1e40af;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .slider-value {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+      color: #64748b;
+      margin-top: 0.5rem;
+    }
+
+    .current-value {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1e40af;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #334155;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231e40af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    select:hover {
+      border-color: #1e40af;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #1e40af;
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #334155;
+      font-size: 0.9375rem;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1e40af;
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn {
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: #1e40af;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #1e3a8a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+
+    .btn-secondary {
+      background: #0d9488;
+      color: #ffffff;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #0f766e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: #1e40af;
+      border: 2px solid #1e40af;
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: #1e40af;
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #b91c1c;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .destination-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .destination-card:hover {
+      border-color: #1e40af;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+    }
+
+    .destination-card.selected {
+      border-color: #1e40af;
+      background: #eff6ff;
+    }
+
+    .destination-card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .destination-card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 0.25rem;
+    }
+
+    .destination-type {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .destination-card-body {
+      padding: 1rem 1.25rem;
+    }
+
+    .destination-description {
+      color: #64748b;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .destination-meta {
+      display: flex;
+      gap: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .meta-item i {
+      color: #1e40af;
+      font-size: 0.875rem;
+    }
+
+    .summary-panel {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .summary-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .summary-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .summary-stat-label {
+      font-size: 0.875rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .summary-stat-value {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    .cost-breakdown {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .cost-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.875rem;
+    }
+
+    .cost-item:last-child {
+      border-bottom: none;
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 2px solid #1e40af;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .cost-label {
+      color: #64748b;
+    }
+
+    .cost-value {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .route-display {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 2px solid #e2e8f0;
+    }
+
+    .route-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .route-title {
+      font-weight: 700;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+
+    .route-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .route-item {
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+    }
+
+    .route-item:hover {
+      border-color: #1e40af;
+      box-shadow: 0 2px 8px rgba(30, 64, 175, 0.1);
+    }
+
+    .route-number {
+      background: #1e40af;
+      color: #ffffff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .route-info {
+      flex: 1;
+    }
+
+    .route-destination {
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.25rem;
+    }
+
+    .route-details {
+      font-size: 0.8125rem;
+      color: #64748b;
+    }
+
+    
+    .trips-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .trip-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .trip-card:hover {
+      border-color: #1e40af;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+    }
+
+    .trip-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+
+    .trip-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-card-date {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    .trip-card-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: #64748b;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: #1e40af;
+      color: #ffffff;
+      border-color: #1e40af;
+    }
+
+    .trip-card-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .trip-stat {
+      text-align: center;
+    }
+
+    .trip-stat-value {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1e40af;
+      display: block;
+    }
+
+    .trip-stat-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .trip-status {
+      display: inline-block;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .trip-status.draft {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .trip-status.planned {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .trip-status.booked {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .empty-state-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state-description {
+      color: #64748b;
+      margin-bottom: 2rem;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #64748b;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: #f8fafc;
+      color: #334155;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1.5rem;
+      border-top: 2px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.5rem;
+      font-size: 0.9375rem;
+    }
+
+    .form-hint {
+      font-size: 0.8125rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1e40af;
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 3000;
+      animation: slideIn 0.3s ease;
+      min-width: 300px;
+    }
+
+    .toast.active {
+      display: flex;
+    }
+
+    .toast.success {
+      background: #0d9488;
+    }
+
+    .toast.error {
+      background: #dc2626;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .loading-spinner {
+      border: 3px solid #e2e8f0;
+      border-top: 3px solid #1e40af;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .accommodation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .accommodation-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .accommodation-card:hover {
+      border-color: #1e40af;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(30, 64, 175, 0.15);
+    }
+
+    .accommodation-card.selected {
+      border-color: #1e40af;
+      background: #eff6ff;
+    }
+
+    .accommodation-image {
+      height: 150px;
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .accommodation-content {
+      padding: 1.25rem;
+    }
+
+    .accommodation-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+
+    .accommodation-type {
+      font-size: 0.8125rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .accommodation-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-badge {
+      background: #f8fafc;
+      color: #64748b;
+      padding: 0.25rem 0.625rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .accommodation-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .price-amount {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    .price-unit {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .activity-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: start;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .activity-card:hover {
+      border-color: #1e40af;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+    }
+
+    .activity-card.selected {
+      border-color: #1e40af;
+      background: #eff6ff;
+    }
+
+    .activity-checkbox {
+      margin-top: 0.25rem;
+    }
+
+    .activity-checkbox input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #1e40af;
+    }
+
+    .activity-icon {
+      font-size: 2rem;
+      width: 48px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .activity-details {
+      flex: 1;
+    }
+
+    .activity-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 0.25rem;
+    }
+
+    .activity-description {
+      color: #64748b;
+      font-size: 0.9375rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .activity-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .activity-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: #334155;
+    }
+
+    .activity-meta-item i {
+      color: #1e40af;
+    }
+
+    .country-selection-section {
+      padding: 4rem 0;
+      background: #f8fafc;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 400px 280px;
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .country-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .country-card.large {
+      grid-column: span 1;
+    }
+
+    .country-card.small {
+      grid-column: span 1;
+    }
+
+    .country-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      background-image: inherit;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .country-card:hover::before {
+      transform: scale(1.05);
+    }
+
+    .country-card:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .country-card-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .country-card-content {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .city-name {
+      font-family: 'Kalam', cursive;
+      font-size: 1.125rem;
+      color: #fbbf24;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      font-weight: 400;
+    }
+
+    .country-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #ffffff;
+      font-weight: 700;
+      line-height: 1;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+      letter-spacing: -0.02em;
+    }
+
+    .country-card.small .country-name {
+      font-size: 2.25rem;
+    }
+
+    .country-card.small .city-name {
+      font-size: 1rem;
+    }
+
+    .country-card.small .country-card-content {
+      bottom: 1.5rem;
+      left: 1.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.625rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge-green {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-orange {
+      background: #fed7aa;
+      color: #92400e;
+    }
+
+    .badge-red {
+      background: #fecaca;
+      color: #991b1b;
+    }
+
+    @media (max-width: 1200px) {
+      .two-column-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .country-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 350px 350px 300px 300px 300px;
+        gap: 1.25rem;
+      }
+
+      .country-card.large,
+      .country-card.small {
+        grid-column: span 1;
+      }
+
+      .country-name {
+        font-size: 2.5rem;
+      }
+
+      .country-card.small .country-name {
+        font-size: 2.5rem;
+      }
+      
+      .nav-menu {
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .main-container {
+        padding: 1rem;
+      }
+
+      .section {
+        padding: 1.5rem;
+      }
+
+      .config-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-container {
+        height: 400px;
+      }
+
+      .destination-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .trip-card-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .country-selection-section {
+        padding: 2rem 0;
+      }
+
+      .country-grid {
+        grid-template-rows: repeat(5, 280px);
+        gap: 1rem;
+      }
+
+      .country-name {
+        font-size: 2rem;
+      }
+
+      .city-name {
+        font-size: 0.875rem;
+      }
+
+      .country-card-content {
+        bottom: 1.25rem;
+        left: 1.25rem;
+      }
+
+      .country-card.small .country-card-content {
+        bottom: 1.25rem;
+        left: 1.25rem;
+      }
+      
+      .navbar {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        display: none;
+      }
+      
+      .nav-menu.active {
+        display: flex;
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      .nav-actions {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .custom-popup {
+      padding: 0;
+    }
+
+    .popup-header {
+      background: linear-gradient(135deg, #1e40af 0%, #0d9488 100%);
+      color: #ffffff;
+      padding: 1rem;
+      font-size: 1.125rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .popup-body {
+      padding: 1rem;
+    }
+
+    .popup-description {
+      color: #64748b;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .popup-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .popup-stat {
+      font-size: 0.8125rem;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    .popup-stat i {
+      color: #1e40af;
+    }
+
+    .popup-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .popup-btn {
+      flex: 1;
+      padding: 0.625rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .popup-btn-primary {
+      background: #1e40af;
+      color: #ffffff;
+    }
+
+    .popup-btn-primary:hover {
+      background: #1e3a8a;
+    }
+
+    .popup-btn-secondary {
+      background: #f8fafc;
+      color: #1e40af;
+      border: 1px solid #e2e8f0;
+    }
+
+    .popup-btn-secondary:hover {
+      background: #e2e8f0;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <!-- Nepal Odyssey Navigation Bar -->
+   <div class="main-container">
+    <nav class="navbar">
+     <div class="nav-logo">
+      <a href="index.html" class="logo">
+       <i class="fas fa-mountain"></i>
+       <span>Nepal Odyssey</span>
+      </a>
+     </div>
+     <ul class="nav-menu">
+      <li class="nav-item">
+       <a href="./index.html" class="nav-link active">Home</a>
+      </li>
+      <li class="nav-item dropdown">
+       <a href="./packages.html" class="nav-link">Packages<i class="fas fa-chevron-down"></i></a>
+       <ul class="dropdown-menu">
+        <li><a href="customtrip.html">Custom Trip</a></li>
+       </ul>
+      </li>
+      <li class="nav-item">
+       <a href="blog.html" class="nav-link">Blog</a>
+      </li>
+      <li class="nav-item">
+       <a href="gallery.html" class="nav-link">Gallery</a>
+      </li>
+      <li class="nav-item dropdown">
+       <a href="about.html" class="nav-link">About <i class="fas fa-chevron-down"></i></a>
+       <ul class="dropdown-menu">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="guides.html">Our Guides</a></li>
+        <li><a href="legal.html">Legal Documents</a></li>
+       </ul>
+      </li>
+      <li class="nav-item">
+       <a href="contact.html" class="nav-link">Contact</a>
+      </li>
+     </ul>
+     <div class="nav-actions">
+      <div class="user-profile" id="userProfile">
+       <div class="user-avatar" id="userAvatar">U</div>
+       <span class="user-name" id="userName">User</span>
+       <button class="logout-btn" id="logoutBtn" aria-label="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+       </button>
+      </div>
+      <button class="login-btn-nav" id="loginBtn" aria-label="Open login modal">
+       <i class="fas fa-user"></i> Login
+      </button>
+      <div class="hamburger">
+       <span class="bar"></span>
+       <span class="bar"></span>
+       <span class="bar"></span>
+      </div>
+     </div>
+    </nav>
+   </div>
+   <!-- Header -->
+   <header class="header">
+    <div class="header-content">
+     <div class="logo-section">
+     <nav class="header-nav"><button class="nav-btn" id="nav-my-trips"> <i class="fas fa-suitcase"></i> <span>My Trips (<span id="trip-count">0</span>)</span> </button> <button class="nav-btn active" id="nav-new-trip"> <i class="fas fa-plus-circle"></i> <span>New Trip</span> </button>
+     </nav>
+    </div>
+   </header><!-- Country Selection Hero -->
+   <section class="hero" id="country-selection-hero">
+    <div class="hero-content">
+     <h2 id="main-title">Plan Your Adventure</h2>
+     <p id="subtitle">Customize your perfect journey through the mountains with intelligent route optimization and comprehensive planning tools</p>
+     <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-value">5</span> <span class="hero-stat-label">Countries</span>
+      </div>
+      <div class="hero-stat"><span class="hero-stat-value">100+</span> <span class="hero-stat-label">Destinations</span>
+      </div>
+      <div class="hero-stat"><span class="hero-stat-value">24/7</span> <span class="hero-stat-label">Planning Access</span>
+      </div>
+     </div>
+    </div>
+   </section><!-- Country Selection Grid -->
+   <section class="country-selection-section" id="country-selection-section">
+    <div class="main-container">
+     <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+      <h3 class="section-title" style="justify-content: center; font-size: 2rem;"><i class="fas fa-globe-asia"></i> Choose Your Mountain Destination</h3>
+      <p class="section-description">Select a country to start planning your adventure</p>
+     </div>
+     <div class="country-grid"><!-- Large Cards - First Row -->
+      <div class="country-card large" data-country="nepal" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800');">
+       <div class="country-card-overlay"></div>
+       <div class="country-card-content">
+        <div class="city-name">
+         Kathmandu
+        </div>
+        <div class="country-name">
+         Nepal
+        </div>
+       </div>
+      </div>
+      <div class="country-card large" data-country="bhutan" style="background-image: url('https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=800');">
+       <div class="country-card-overlay"></div>
+       <div class="country-card-content">
+        <div class="city-name">
+         Thimphu
+        </div>
+        <div class="country-name">
+         Bhutan
+        </div>
+       </div>
+      </div><!-- Small Cards - Second Row -->
+      <div class="country-card small" data-country="india" style="background-image: url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600');">
+       <div class="country-card-overlay"></div>
+       <div class="country-card-content">
+        <div class="city-name">
+         Leh
+        </div>
+        <div class="country-name">
+         India
+        </div>
+       </div>
+      </div>
+      <div class="country-card small" data-country="tibet" style="background-image: url('https://images.unsplash.com/photo-1568849676085-51415703900f?w=600');">
+       <div class="country-card-overlay"></div>
+       <div class="country-card-content">
+        <div class="city-name">
+         Lhasa
+        </div>
+        <div class="country-name">
+         Tibet
+        </div>
+       </div>
+      </div>
+      <div class="country-card small" data-country="pakistan" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600');">
+       <div class="country-card-overlay"></div>
+       <div class="country-card-content">
+        <div class="city-name">
+         Hunza
+        </div>
+        <div class="country-name">
+         Pakistan
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Main Content -->
+   <main class="main-container"><!-- View: New Trip Planning -->
+    <div id="view-planning" class="view-content" style="display: none;"><!-- Back to Countries Button -->
+     <div style="margin-bottom: 2rem;"><button class="btn btn-outline btn-small" id="btn-back-to-countries"> <i class="fas fa-arrow-left"></i> Change Country </button>
+     </div><!-- Tab Navigation -->
+     <div class="tab-navigation"><button class="tab-btn active" data-tab="destinations"> <i class="fas fa-map-marked-alt"></i> Destinations </button> <button class="tab-btn" data-tab="configuration"> <i class="fas fa-sliders-h"></i> Configuration </button> <button class="tab-btn" data-tab="accommodation"> <i class="fas fa-hotel"></i> Accommodation </button> <button class="tab-btn" data-tab="activities"> <i class="fas fa-hiking"></i> Activities </button> <button class="tab-btn" data-tab="itinerary"> <i class="fas fa-calendar-alt"></i> Itinerary </button>
+     </div><!-- Tab: Destinations -->
+     <div class="tab-content active" id="tab-destinations">
+      <div class="two-column-grid">
+       <div>
+        <section class="section">
+         <div class="section-header">
+          <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Interactive Map</h3>
+          <p class="section-description">Click markers to view details and add destinations to your trip</p>
+         </div>
+         <div class="map-container">
+          <div id="nepal-map"></div>
+          <div class="map-controls"><button class="map-control-btn" id="btn-recenter" title="Recenter Map"> <i class="fas fa-crosshairs"></i> </button> <button class="map-control-btn" id="btn-fit-route" title="Fit Route"> <i class="fas fa-expand"></i> </button>
+          </div>
+         </div>
+        </section>
+        <section class="section">
+         <div class="section-header">
+          <h3 class="section-title"><i class="fas fa-list"></i> Browse Destinations</h3>
+          <p class="section-description">Select destinations you want to visit</p>
+         </div>
+         <div class="destination-grid" id="destination-grid"></div>
+        </section>
+        <div class="route-display" id="route-display" style="display: none;">
+         <div class="route-header">
+          <div class="route-title"><i class="fas fa-route"></i> Your Journey Route
+          </div><button class="btn btn-secondary btn-small" id="btn-optimize-route"> <i class="fas fa-magic"></i> Optimize Route </button>
+         </div>
+         <div class="route-list" id="route-list"></div>
+        </div>
+       </div><!-- Summary Panel -->
+       <div>
+        <div class="summary-panel">
+         <div class="summary-title"><i class="fas fa-chart-line"></i> Trip Summary
+         </div>
+         <div class="summary-stats">
+          <div class="summary-stat"><span class="summary-stat-label"> <i class="fas fa-map-pin"></i> Destinations </span> <span class="summary-stat-value" id="summary-destinations">0</span>
+          </div>
+          <div class="summary-stat"><span class="summary-stat-label"> <i class="fas fa-route"></i> Total Distance </span> <span class="summary-stat-value" id="summary-distance">0 km</span>
+          </div>
+          <div class="summary-stat"><span class="summary-stat-label"> <i class="fas fa-calendar"></i> Duration </span> <span class="summary-stat-value" id="summary-duration">7 days</span>
+          </div>
+          <div class="summary-stat"><span class="summary-stat-label"> <i class="fas fa-users"></i> Travelers </span> <span class="summary-stat-value" id="summary-travelers">2 people</span>
+          </div>
+         </div>
+         <div class="cost-breakdown">
+          <div class="cost-item"><span class="cost-label">Accommodation</span> <span class="cost-value" id="cost-accommodation">$0</span>
+          </div>
+          <div class="cost-item"><span class="cost-label">Transportation</span> <span class="cost-value" id="cost-transportation">$0</span>
+          </div>
+          <div class="cost-item"><span class="cost-label">Food &amp; Drinks</span> <span class="cost-value" id="cost-food">$0</span>
+          </div>
+          <div class="cost-item"><span class="cost-label">Activities</span> <span class="cost-value" id="cost-activities">$0</span>
+          </div>
+          <div class="cost-item"><span class="cost-label">Total Estimated Cost</span> <span class="cost-value" id="cost-total">$0</span>
+          </div>
+         </div>
+         <div class="button-group"><button class="btn btn-primary" id="btn-save-trip" disabled> <i class="fas fa-save"></i> <span id="save-button-text">Save Trip</span> </button>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Tab: Configuration -->
+     <div class="tab-content" id="tab-configuration">
+      <section class="section">
+       <div class="section-header">
+        <h3 class="section-title"><i class="fas fa-sliders-h"></i> Trip Configuration</h3>
+        <p class="section-description">Customize your travel preferences</p>
+       </div>
+       <div class="config-grid">
+        <div class="config-item"><label class="config-label"> <i class="fas fa-users"></i> Number of Travelers </label> <input type="range" class="slider" id="travelers" min="1" max="20" value="2">
+         <div class="slider-value"><span>1</span> <span class="current-value" id="travelers-value">2 people</span> <span>20</span>
+         </div>
+        </div>
+        <div class="config-item"><label class="config-label"> <i class="fas fa-calendar-alt"></i> Trip Duration </label> <input type="range" class="slider" id="duration" min="1" max="60" value="7">
+         <div class="slider-value"><span>1</span> <span class="current-value" id="duration-value">7 days</span> <span>60</span>
+         </div>
+        </div>
+        <div class="config-item"><label class="config-label"> <i class="fas fa-star"></i> Travel Style </label> <select id="travel-style"> <option value="budget">Budget Travel ($30-50/day)</option> <option value="standard" selected>Standard Comfort ($60-100/day)</option> <option value="luxury">Luxury Experience ($150-300/day)</option> </select>
+        </div>
+        <div class="config-item"><label class="config-label"> <i class="fas fa-sun"></i> Preferred Season </label> <select id="season"> <option value="spring">Spring (Mar-May) - Best for trekking</option> <option value="summer">Summer (Jun-Aug) - Monsoon season</option> <option value="autumn" selected>Autumn (Sep-Nov) - Peak season</option> <option value="winter">Winter (Dec-Feb) - Cold but clear</option> </select>
+        </div>
+        <div class="config-item"><label class="config-label"> <i class="fas fa-dumbbell"></i> Fitness Level </label> <select id="fitness-level"> <option value="low">Low - Easy walks only</option> <option value="moderate" selected>Moderate - Can handle some hiking</option> <option value="high">High - Ready for challenging treks</option> <option value="expert">Expert - Experienced mountaineer</option> </select>
+        </div>
+        <div class="config-item"><label class="config-label"> <i class="fas fa-clock"></i> Travel Pace </label> <select id="travel-pace"> <option value="relaxed">Relaxed - Lots of free time</option> <option value="moderate" selected>Moderate - Balanced schedule</option> <option value="fast">Fast - See as much as possible</option> </select>
+        </div>
+       </div>
+       <div class="config-grid" style="margin-top: 2rem;">
+        <div class="config-item"><label class="config-label"> <i class="fas fa-calendar-day"></i> Start Date (Optional) </label> <input type="date" id="start-date">
+        </div>
+        <div class="config-item"><label class="config-label"> <i class="fas fa-calendar-check"></i> End Date (Optional) </label> <input type="date" id="end-date">
+        </div>
+       </div>
+      </section>
+     </div><!-- Tab: Accommodation -->
+     <div class="tab-content" id="tab-accommodation">
+      <section class="section">
+       <div class="section-header">
+        <h3 class="section-title"><i class="fas fa-hotel"></i> Accommodation Options</h3>
+        <p class="section-description">Select your preferred accommodation type for each destination</p>
+       </div>
+       <div id="accommodation-content">
+        <div class="empty-state">
+         <div class="empty-state-icon">
+          🏨
+         </div>
+         <div class="empty-state-title">
+          No Destinations Selected
+         </div>
+         <p class="empty-state-description">Add destinations to your trip to view accommodation options</p>
+        </div>
+       </div>
+      </section>
+     </div><!-- Tab: Activities -->
+     <div class="tab-content" id="tab-activities">
+      <section class="section">
+       <div class="section-header">
+        <h3 class="section-title"><i class="fas fa-hiking"></i> Activities &amp; Experiences</h3>
+        <p class="section-description">Choose activities for your selected destinations</p>
+       </div>
+       <div id="activities-content">
+        <div class="empty-state">
+         <div class="empty-state-icon">
+          🎯
+         </div>
+         <div class="empty-state-title">
+          No Destinations Selected
+         </div>
+         <p class="empty-state-description">Add destinations to your trip to view available activities</p>
+        </div>
+       </div>
+      </section>
+     </div><!-- Tab: Itinerary -->
+     <div class="tab-content" id="tab-itinerary">
+      <section class="section">
+       <div class="section-header">
+        <h3 class="section-title"><i class="fas fa-calendar-alt"></i> Day-by-Day Itinerary</h3>
+        <p class="section-description">Your complete trip breakdown</p>
+       </div>
+       <div id="itinerary-content">
+        <div class="empty-state">
+         <div class="empty-state-icon">
+          📅
+         </div>
+         <div class="empty-state-title">
+          Itinerary Not Generated
+         </div>
+         <p class="empty-state-description">Complete your trip configuration to generate a detailed itinerary</p><button class="btn btn-primary" id="btn-generate-itinerary"> <i class="fas fa-magic"></i> Generate Itinerary </button>
+        </div>
+       </div>
+      </section>
+     </div>
+    </div><!-- View: My Trips -->
+    <div id="view-my-trips" class="view-content" style="display: none;">
+     <section class="section">
+      <div class="section-header">
+       <h3 class="section-title"><i class="fas fa-suitcase"></i> My Saved Trips</h3>
+       <p class="section-description">View and manage your trip plans</p>
+      </div>
+      <div class="trips-list" id="trips-list">
+       <div class="empty-state">
+        <div class="empty-state-icon">
+         ✈️
+        </div>
+        <div class="empty-state-title">
+         No Saved Trips Yet
+        </div>
+        <p class="empty-state-description">Start planning your first adventure!</p><button class="btn btn-primary" onclick="backToCountrySelection()"> <i class="fas fa-plus-circle"></i> <span id="cta-button">Start Planning</span> </button>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main><!-- Save Trip Modal -->
+   <div class="modal-overlay" id="save-trip-modal">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h3 class="modal-title">Save Your Trip</h3><button class="modal-close" id="close-save-modal"> <i class="fas fa-times"></i> </button>
+     </div>
+     <div class="modal-body">
+      <form id="save-trip-form">
+       <div class="form-group"><label class="form-label" for="trip-name">Trip Name *</label> <input type="text" id="trip-name" placeholder="e.g., Himalayan Adventure 2024" required>
+       </div>
+       <div class="form-group"><label class="form-label" for="trip-notes">Trip Notes (Optional)</label> <textarea id="trip-notes" placeholder="Add any notes, reminders, or special requirements..."></textarea>
+       </div>
+       <div class="form-group"><label class="form-label" for="trip-status">Status</label> <select id="trip-status"> <option value="draft">Draft - Still planning</option> <option value="planned">Planned - Ready to book</option> <option value="booked">Booked - Confirmed</option> </select>
+       </div>
+      </form>
+     </div>
+     <div class="modal-footer"><button class="btn btn-outline" id="cancel-save">Cancel</button> <button class="btn btn-primary" id="confirm-save"> <i class="fas fa-save"></i> Save Trip </button>
+     </div>
+    </div>
+   </div><!-- Delete Confirmation Modal -->
+   <div class="modal-overlay" id="delete-trip-modal">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h3 class="modal-title">Delete Trip?</h3><button class="modal-close" id="close-delete-modal"> <i class="fas fa-times"></i> </button>
+     </div>
+     <div class="modal-body">
+      <p>Are you sure you want to delete "<strong id="delete-trip-name"></strong>"?</p>
+      <p style="color: #64748b; margin-top: 0.5rem;">This action cannot be undone.</p>
+     </div>
+     <div class="modal-footer"><button class="btn btn-outline" id="cancel-delete">Cancel</button> <button class="btn btn-danger" id="confirm-delete"> <i class="fas fa-trash"></i> Delete Trip </button>
+     </div>
+    </div>
+   </div><!-- Toast Notification -->
+   <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toast-message"></span>
+   </div>
+  </div>
+  <script>
+    const USERS_KEY = 'nepalOdysseyUsers';
+    
+    function initializeUsers() {
+        if (!localStorage.getItem(USERS_KEY)) {
+            const defaultUsers = [
+                { id: 1, name: 'Demo User', email: 'demo@nepalodyssey.com', password: 'password123' }
+            ];
+            localStorage.setItem(USERS_KEY, JSON.stringify(defaultUsers));
+        }
+    }
+    
+    function getUsers() {
+        return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+    }
+    
+    function saveUsers(users) {
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    }
+    
+    function findUserByEmail(email) {
+        const users = getUsers();
+        return users.find(user => user.email === email);
+    }
+    
+    function addUser(name, email, password) {
+        const users = getUsers();
+        const newUser = {
+            id: Date.now(),
+            name,
+            email,
+            password
+        };
+        users.push(newUser);
+        saveUsers(users);
+        return newUser;
+    }
+    
+    function isLoggedIn() {
+        return localStorage.getItem('currentUser') !== null;
+    }
+    
+    function getCurrentUser() {
+        const userData = localStorage.getItem('currentUser');
+        return userData ? JSON.parse(userData) : null;
+    }
+    
+    function setCurrentUser(user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+    
+    function removeCurrentUser() {
+        localStorage.removeItem('currentUser');
+    }
+    
+    function updateUIForLoginStatus() {
+        const loginBtn = document.getElementById('loginBtn');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        
+        if (isLoggedIn()) {
+            const user = getCurrentUser();
+            loginBtn.style.display = 'none';
+            userProfile.style.display = 'flex';
+            const firstName = user.name.split(' ')[0];
+            userAvatar.textContent = firstName.charAt(0).toUpperCase();
+            userName.textContent = firstName;
+        } else {
+            loginBtn.style.display = 'flex';
+            userProfile.style.display = 'none';
+        }
+    }
+
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function initApp() {
+        initializeUsers();
+        updateUIForLoginStatus();
+    }
+    
+    loginBtn.addEventListener('click', () => {
+        alert('Login feature coming soon! For now, use demo@nepalodyssey.com / password123');
+    });
+    
+    logoutBtn.addEventListener('click', () => {
+        removeCurrentUser();
+        updateUIForLoginStatus();
+    });
+
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+    
+    document.querySelectorAll('.dropdown > .nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const dropdown = link.parentElement;
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', initApp);
+
+    const nepalDestinations = [
+      {
+        id: 1,
+        name: 'Kathmandu',
+        lat: 27.7172,
+        lng: 85.3240,
+        description: 'Capital city with UNESCO World Heritage sites, ancient temples, and vibrant culture',
+        icon: '🏛️',
+        type: 'Cultural',
+        elevation: 1400,
+        baselineCost: 50,
+        bestSeason: ['spring', 'autumn', 'winter'],
+        attractions: [
+          'Pashupatinath Temple',
+          'Boudhanath Stupa',
+          'Swayambhunath (Monkey Temple)',
+          'Durbar Square',
+          'Thamel District'
+        ],
+        activities: [
+          { name: 'Temple Tour', duration: 4, cost: 30, difficulty: 'easy' },
+          { name: 'Cultural Walking Tour', duration: 3, cost: 25, difficulty: 'easy' },
+          { name: 'Cooking Class', duration: 3, cost: 40, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Pokhara',
+        lat: 28.2096,
+        lng: 83.9856,
+        description: 'Gateway to Annapurna, beautiful lakes, and adventure sports hub',
+        icon: '🏔️',
+        type: 'Adventure',
+        elevation: 827,
+        baselineCost: 45,
+        bestSeason: ['spring', 'autumn'],
+        attractions: [
+          'Phewa Lake',
+          'World Peace Pagoda',
+          'Davis Falls',
+          'Gupteshwor Cave',
+          'Sarangkot Viewpoint'
+        ],
+        activities: [
+          { name: 'Paragliding', duration: 2, cost: 100, difficulty: 'moderate' },
+          { name: 'Boat Ride on Phewa Lake', duration: 2, cost: 15, difficulty: 'easy' },
+          { name: 'Sunrise at Sarangkot', duration: 3, cost: 20, difficulty: 'easy' },
+          { name: 'Mountain Biking', duration: 4, cost: 35, difficulty: 'moderate' }
+        ]
+      },
+      {
+        id: 3,
+        name: 'Chitwan National Park',
+        lat: 27.5291,
+        lng: 84.3542,
+        description: 'UNESCO World Heritage jungle with elephants, rhinos, and tigers',
+        icon: '🐘',
+        type: 'Wildlife',
+        elevation: 200,
+        baselineCost: 60,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Jungle Safari',
+          'Elephant Breeding Center',
+          'Tharu Village',
+          'Rapti River',
+          'Crocodile Observation'
+        ],
+        activities: [
+          { name: 'Jeep Safari', duration: 4, cost: 50, difficulty: 'easy' },
+          { name: 'Canoe Trip', duration: 2, cost: 25, difficulty: 'easy' },
+          { name: 'Jungle Walk', duration: 3, cost: 30, difficulty: 'moderate' },
+          { name: 'Tharu Cultural Program', duration: 2, cost: 15, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 4,
+        name: 'Lumbini',
+        lat: 27.4833,
+        lng: 83.2764,
+        description: 'Birthplace of Buddha and UNESCO World Heritage pilgrimage site',
+        icon: '🕉️',
+        type: 'Spiritual',
+        elevation: 150,
+        baselineCost: 40,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Maya Devi Temple',
+          'Ashoka Pillar',
+          'Peace Pagoda',
+          'Monastic Zone',
+          'Sacred Garden'
+        ],
+        activities: [
+          { name: 'Temple & Monastery Tour', duration: 4, cost: 20, difficulty: 'easy' },
+          { name: 'Meditation Session', duration: 2, cost: 10, difficulty: 'easy' },
+          { name: 'Bicycle Tour', duration: 3, cost: 15, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 5,
+        name: 'Nagarkot',
+        lat: 27.7172,
+        lng: 85.5203,
+        description: 'Hill station famous for Himalayan sunrise and mountain panoramas',
+        icon: '🌅',
+        type: 'Scenic',
+        elevation: 2195,
+        baselineCost: 35,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Himalayan Sunrise',
+          'Nagarkot View Tower',
+          'Mountain Panorama',
+          'Hiking Trails',
+          'Village Walks'
+        ],
+        activities: [
+          { name: 'Sunrise Viewing', duration: 2, cost: 5, difficulty: 'easy' },
+          { name: 'Hiking to Changu Narayan', duration: 4, cost: 10, difficulty: 'moderate' },
+          { name: 'Photography Tour', duration: 3, cost: 25, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 6,
+        name: 'Bhaktapur',
+        lat: 27.6710,
+        lng: 85.4298,
+        description: 'Medieval city with preserved Newari architecture and traditional crafts',
+        icon: '🏰',
+        type: 'Cultural',
+        elevation: 1401,
+        baselineCost: 30,
+        bestSeason: ['spring', 'autumn', 'winter'],
+        attractions: [
+          'Durbar Square',
+          'Nyatapola Temple',
+          'Pottery Square',
+          '55 Window Palace',
+          'Peacock Window'
+        ],
+        activities: [
+          { name: 'Heritage Walk', duration: 3, cost: 20, difficulty: 'easy' },
+          { name: 'Pottery Workshop', duration: 2, cost: 15, difficulty: 'easy' },
+          { name: 'Food Tour', duration: 3, cost: 30, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 7,
+        name: 'Patan',
+        lat: 27.6661,
+        lng: 85.3245,
+        description: 'Ancient city renowned for fine arts, metalwork, and Buddhist heritage',
+        icon: '🎨',
+        type: 'Cultural',
+        elevation: 1330,
+        baselineCost: 30,
+        bestSeason: ['spring', 'autumn', 'winter'],
+        attractions: [
+          'Patan Durbar Square',
+          'Golden Temple',
+          'Patan Museum',
+          'Mahabouddha Temple',
+          'Handicraft Centers'
+        ],
+        activities: [
+          { name: 'Art & Craft Tour', duration: 3, cost: 25, difficulty: 'easy' },
+          { name: 'Museum Visit', duration: 2, cost: 10, difficulty: 'easy' },
+          { name: 'Metalwork Workshop', duration: 2, cost: 20, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 8,
+        name: 'Bandipur',
+        lat: 27.9464,
+        lng: 84.4208,
+        description: 'Preserved hilltop town with Newari culture and stunning mountain views',
+        icon: '⛰️',
+        type: 'Scenic',
+        elevation: 1030,
+        baselineCost: 40,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Tundikhel Viewpoint',
+          'Siddha Cave',
+          'Thani Mai Temple',
+          'Traditional Architecture',
+          'Mountain Panorama'
+        ],
+        activities: [
+          { name: 'Village Walk', duration: 2, cost: 10, difficulty: 'easy' },
+          { name: 'Cave Exploration', duration: 3, cost: 15, difficulty: 'moderate' },
+          { name: 'Cultural Experience', duration: 3, cost: 20, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 9,
+        name: 'Janakpur',
+        lat: 26.7288,
+        lng: 85.9245,
+        description: 'Hindu pilgrimage city with grand Janaki Temple and Mithila culture',
+        icon: '🛕',
+        type: 'Spiritual',
+        elevation: 76,
+        baselineCost: 35,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Janaki Temple',
+          'Ram Mandir',
+          'Sacred Ponds',
+          'Vivah Mandap',
+          'Mithila Art'
+        ],
+        activities: [
+          { name: 'Temple Tour', duration: 3, cost: 15, difficulty: 'easy' },
+          { name: 'Mithila Art Workshop', duration: 2, cost: 20, difficulty: 'easy' },
+          { name: 'Cultural Walk', duration: 2, cost: 10, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 10,
+        name: 'Gorkha',
+        lat: 28.0006,
+        lng: 84.6333,
+        description: 'Historic fortress birthplace of modern Nepal and Shah dynasty',
+        icon: '🛡️',
+        type: 'Historical',
+        elevation: 1135,
+        baselineCost: 40,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Gorkha Durbar',
+          'Gorakhnath Cave',
+          'Manakamana Temple',
+          'Museum',
+          'Mountain Views'
+        ],
+        activities: [
+          { name: 'Palace & Fort Tour', duration: 3, cost: 15, difficulty: 'moderate' },
+          { name: 'Cable Car to Manakamana', duration: 4, cost: 35, difficulty: 'easy' },
+          { name: 'Historical Walk', duration: 2, cost: 10, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 11,
+        name: 'Namche Bazaar',
+        lat: 27.8000,
+        lng: 86.7167,
+        description: 'Gateway to Everest, vibrant Sherpa market town in high Himalayas',
+        icon: '🏔️',
+        type: 'Adventure',
+        elevation: 3440,
+        baselineCost: 70,
+        bestSeason: ['spring', 'autumn'],
+        attractions: [
+          'Everest Viewpoint',
+          'Sherpa Museum',
+          'Saturday Market',
+          'Tengboche Monastery',
+          'Himalayan Panorama'
+        ],
+        activities: [
+          { name: 'Acclimatization Hike', duration: 4, cost: 20, difficulty: 'high' },
+          { name: 'Everest View Hotel Trek', duration: 5, cost: 30, difficulty: 'high' },
+          { name: 'Cultural Experience', duration: 2, cost: 15, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 12,
+        name: 'Rara Lake',
+        lat: 29.5333,
+        lng: 82.0833,
+        description: 'Remote pristine alpine lake in far western Nepal wilderness',
+        icon: '💧',
+        type: 'Wilderness',
+        elevation: 2990,
+        baselineCost: 80,
+        bestSeason: ['spring', 'autumn'],
+        attractions: [
+          'Rara Lake',
+          'National Park',
+          'Mountain Scenery',
+          'Wildlife',
+          'Remote Villages'
+        ],
+        activities: [
+          { name: 'Lake Circuit Trek', duration: 6, cost: 40, difficulty: 'high' },
+          { name: 'Bird Watching', duration: 3, cost: 25, difficulty: 'moderate' },
+          { name: 'Photography Expedition', duration: 4, cost: 30, difficulty: 'moderate' }
+        ]
+      },
+      {
+        id: 13,
+        name: 'Tansen',
+        lat: 27.8667,
+        lng: 83.5500,
+        description: 'Historic hill station with Newari heritage and panoramic views',
+        icon: '🌄',
+        type: 'Cultural',
+        elevation: 1350,
+        baselineCost: 38,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Tansen Durbar',
+          'Rani Mahal',
+          'Srinagar Hill',
+          'Traditional Bazaar',
+          'Amar Narayan Temple'
+        ],
+        activities: [
+          { name: 'Heritage Walk', duration: 3, cost: 15, difficulty: 'easy' },
+          { name: 'Sunrise at Srinagar', duration: 3, cost: 10, difficulty: 'moderate' },
+          { name: 'Handicraft Shopping', duration: 2, cost: 5, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 14,
+        name: 'Dhulikhel',
+        lat: 27.6167,
+        lng: 85.5500,
+        description: 'Ancient Newari mountain resort with Himalayan views near Kathmandu',
+        icon: '🏞️',
+        type: 'Scenic',
+        elevation: 1550,
+        baselineCost: 35,
+        bestSeason: ['autumn', 'winter', 'spring'],
+        attractions: [
+          'Himalayan Panorama',
+          'Kali Temple',
+          'Namo Buddha',
+          'Traditional Town',
+          'Hiking Trails'
+        ],
+        activities: [
+          { name: 'Hiking to Namo Buddha', duration: 5, cost: 15, difficulty: 'moderate' },
+          { name: 'Sunrise Viewing', duration: 2, cost: 5, difficulty: 'easy' },
+          { name: 'Village Homestay', duration: 24, cost: 40, difficulty: 'easy' }
+        ]
+      },
+      {
+        id: 15,
+        name: 'Mustang (Lo Manthang)',
+        lat: 29.1861,
+        lng: 83.9780,
+        description: 'Ancient forbidden kingdom with Tibetan culture and desert landscapes',
+        icon: '🏜️',
+        type: 'Adventure',
+        elevation: 3840,
+        baselineCost: 120,
+        bestSeason: ['spring', 'autumn'],
+        attractions: [
+          'Lo Manthang Palace',
+          'Ancient Monasteries',
+          'Cave Dwellings',
+          'Desert Landscape',
+          'Tibetan Culture'
+        ],
+        activities: [
+          { name: 'Upper Mustang Trek', duration: 168, cost: 1500, difficulty: 'high' },
+          { name: 'Monastery Visit', duration: 3, cost: 20, difficulty: 'moderate' },
+          { name: 'Cultural Immersion', duration: 4, cost: 30, difficulty: 'moderate' }
+        ]
+      }
+    ];
+
+    const accommodationTypes = [
+      {
+        id: 'guesthouse',
+        name: 'Guesthouse',
+        icon: '🏠',
+        description: 'Budget-friendly, local experience',
+        priceMultiplier: 0.5,
+        features: ['Basic Amenities', 'Shared Bathroom', 'Local Food']
+      },
+      {
+        id: 'standard-hotel',
+        name: 'Standard Hotel',
+        icon: '🏨',
+        description: 'Comfortable mid-range accommodation',
+        priceMultiplier: 1.0,
+        features: ['Private Bathroom', 'WiFi', 'Restaurant', 'Hot Water']
+      },
+      {
+        id: 'luxury-resort',
+        name: 'Luxury Resort',
+        icon: '⭐',
+        description: 'Premium facilities and services',
+        priceMultiplier: 2.5,
+        features: ['Spa', 'Pool', 'Fine Dining', 'Concierge', '24/7 Service']
+      },
+      {
+        id: 'homestay',
+        name: 'Homestay',
+        icon: '🏡',
+        description: 'Authentic cultural immersion',
+        priceMultiplier: 0.6,
+        features: ['Family Experience', 'Home Cooked Meals', 'Cultural Exchange']
+      }
+    ];
+
+    let map;
+    let markers = [];
+    let selectedDestinations = [];
+    let routePolyline = null;
+    let currentTrip = null;
+    let tripToDelete = null;
+    let allTrips = [];
+    let currentCountry = null;
+    
+    let config = {
+      travelers: 2,
+      duration: 7,
+      travelStyle: 'standard',
+      season: 'autumn',
+      fitnessLevel: 'moderate',
+      travelPace: 'moderate',
+      startDate: '',
+      endDate: '',
+      selectedAccommodations: {},
+      selectedActivities: []
+    };
+
+    const countryDestinationsMap = {
+      nepal: nepalDestinations,
+      bhutan: [
+        { id: 101, name: 'Paro', lat: 27.4287, lng: 89.4164, description: 'Home to Tiger\'s Nest Monastery', icon: '🏯', type: 'Cultural', elevation: 2250, baselineCost: 80, bestSeason: ['spring', 'autumn'], attractions: ['Tiger\'s Nest', 'Rinpung Dzong'], activities: [] },
+        { id: 102, name: 'Thimphu', lat: 27.4728, lng: 89.6393, description: 'Capital city with unique culture', icon: '🏛️', type: 'Cultural', elevation: 2334, baselineCost: 85, bestSeason: ['spring', 'autumn'], attractions: ['Tashichho Dzong', 'Buddha Dordenma'], activities: [] }
+      ],
+      india: [
+        { id: 201, name: 'Leh', lat: 34.1526, lng: 77.5771, description: 'High altitude desert adventure', icon: '🏔️', type: 'Adventure', elevation: 3500, baselineCost: 60, bestSeason: ['summer'], attractions: ['Pangong Lake', 'Nubra Valley'], activities: [] },
+        { id: 202, name: 'Manali', lat: 32.2432, lng: 77.1892, description: 'Himalayan hill station', icon: '⛰️', type: 'Adventure', elevation: 2050, baselineCost: 55, bestSeason: ['spring', 'summer', 'autumn'], attractions: ['Rohtang Pass', 'Solang Valley'], activities: [] }
+      ],
+      tibet: [
+        { id: 301, name: 'Lhasa', lat: 29.6500, lng: 91.1000, description: 'Spiritual heart of Tibet', icon: '🕉️', type: 'Spiritual', elevation: 3656, baselineCost: 100, bestSeason: ['summer', 'autumn'], attractions: ['Potala Palace', 'Jokhang Temple'], activities: [] },
+        { id: 302, name: 'Shigatse', lat: 29.2500, lng: 88.8800, description: 'Gateway to Everest Base Camp', icon: '🏔️', type: 'Adventure', elevation: 3836, baselineCost: 95, bestSeason: ['spring', 'autumn'], attractions: ['Tashilhunpo Monastery', 'Everest Base Camp'], activities: [] }
+      ],
+      pakistan: [
+        { id: 401, name: 'Hunza Valley', lat: 36.3167, lng: 74.6500, description: 'Paradise on earth with stunning peaks', icon: '🏔️', type: 'Scenic', elevation: 2438, baselineCost: 50, bestSeason: ['spring', 'summer', 'autumn'], attractions: ['Baltit Fort', 'Attabad Lake'], activities: [] },
+        { id: 402, name: 'Skardu', lat: 35.2978, lng: 75.6333, description: 'Gateway to K2 and mighty Karakoram', icon: '⛰️', type: 'Adventure', elevation: 2286, baselineCost: 55, bestSeason: ['summer'], attractions: ['Deosai Plains', 'Shangrila Resort'], activities: [] }
+      ]
+    };
+
+    const countryNamesMap = {
+      nepal: 'Nepal',
+      bhutan: 'Bhutan',
+      india: 'India',
+      tibet: 'Tibet',
+      pakistan: 'Pakistan'
+    };
+
+    function selectCountry(country) {
+      currentCountry = country;
+      selectedDestinations = [];
+      
+      document.getElementById('country-selection-hero').style.display = 'none';
+      document.getElementById('country-selection-section').style.display = 'none';
+      document.getElementById('view-planning').style.display = 'block';
+      
+      setTimeout(() => {
+        if (!map) {
+          initializeMap();
+        }
+        
+        const countryCoords = {
+          nepal: [28.3949, 84.1240],
+          bhutan: [27.5142, 90.4336],
+          india: [32.7266, 74.8570],
+          tibet: [29.6500, 91.1000],
+          pakistan: [35.9250, 74.3587]
+        };
+        
+        if (map) {
+          map.setView(countryCoords[country], 7);
+          map.invalidateSize();
+        }
+        
+        clearMap();
+        addDestinationMarkers();
+        updateAllUI();
+      }, 50);
+      
+      showToast(`Planning your ${countryNamesMap[country]} adventure!`, 'success');
+    }
+
+    function backToCountrySelection() {
+      currentCountry = null;
+      selectedDestinations = [];
+      
+      document.getElementById('country-selection-hero').style.display = 'block';
+      document.getElementById('country-selection-section').style.display = 'block';
+      document.getElementById('view-planning').style.display = 'none';
+      document.getElementById('view-my-trips').style.display = 'none';
+      
+      document.getElementById('nav-new-trip').classList.add('active');
+      document.getElementById('nav-my-trips').classList.remove('active');
+      
+      clearMap();
+    }
+
+    function clearMap() {
+      if (routePolyline && map) {
+        map.removeLayer(routePolyline);
+        routePolyline = null;
+      }
+      
+      markers.forEach(({ marker }) => {
+        if (map) {
+          map.removeLayer(marker);
+        }
+      });
+      markers = [];
+    }
+
+    function getCurrentDestinations() {
+      if (!currentCountry) return [];
+      return countryDestinationsMap[currentCountry] || [];
+    }
+
+    const defaultConfig = {
+      main_title: 'Plan Your Adventure',
+      subtitle: 'Customize your perfect journey through the mountains with intelligent route optimization and comprehensive planning tools',
+      cta_button: 'Start Planning',
+      save_button_text: 'Save Trip'
+    };
+
+    function initializeMap() {
+      if (map) {
+        return;
+      }
+
+      const mapElement = document.getElementById('nepal-map');
+      if (!mapElement) {
+        return;
+      }
+
+      map = L.map('nepal-map', {
+        center: [28.3949, 84.1240],
+        zoom: 7,
+        zoomControl: true,
+        scrollWheelZoom: true
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      setTimeout(() => {
+        if (map) {
+          map.invalidateSize();
+        }
+      }, 100);
+    }
+
+    function addDestinationMarkers() {
+      const destinations = getCurrentDestinations();
+      destinations.forEach(destination => {
+        const marker = L.marker([destination.lat, destination.lng])
+          .addTo(map)
+          .bindPopup(createPopupContent(destination));
+
+        marker.on('click', () => {
+          marker.openPopup();
+        });
+
+        markers.push({ destination, marker });
+      });
+    }
+
+    function createPopupContent(destination) {
+      const isSelected = selectedDestinations.some(d => d.id === destination.id);
+      return `
+        <div class="custom-popup">
+          <div class="popup-header">
+            ${destination.icon} ${destination.name}
+          </div>
+          <div class="popup-body">
+            <p class="popup-description">${destination.description}</p>
+            <div class="popup-stats">
+              <div class="popup-stat">
+                <i class="fas fa-mountain"></i>
+                ${destination.elevation}m
+              </div>
+              <div class="popup-stat">
+                <i class="fas fa-dollar-sign"></i>
+                $${destination.baselineCost}/day
+              </div>
+              <div class="popup-stat">
+                <i class="fas fa-tag"></i>
+                ${destination.type}
+              </div>
+              <div class="popup-stat">
+                <i class="fas fa-map-marker-alt"></i>
+                ${destination.attractions.length} sites
+              </div>
+            </div>
+            <div class="popup-actions">
+              <button class="popup-btn ${isSelected ? 'popup-btn-secondary' : 'popup-btn-primary'}" 
+                      onclick="toggleDestination(${destination.id})">
+                ${isSelected ? '✓ Added' : '+ Add to Trip'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleDestination(destinationId) {
+      const destinations = getCurrentDestinations();
+      const destination = destinations.find(d => d.id === destinationId);
+      const index = selectedDestinations.findIndex(d => d.id === destinationId);
+
+      if (index > -1) {
+        selectedDestinations.splice(index, 1);
+        showToast(`${destination.name} removed from trip`, 'success');
+      } else {
+        selectedDestinations.push(destination);
+        showToast(`${destination.name} added to trip`, 'success');
+      }
+
+      updateAllUI();
+    }
+
+    function updateAllUI() {
+      renderDestinationGrid();
+      updateRoute();
+      updateSummary();
+      updateAllMarkerPopups();
+      updateAccommodationTab();
+      updateActivitiesTab();
+      
+      document.getElementById('btn-save-trip').disabled = selectedDestinations.length === 0;
+    }
+
+    function renderDestinationGrid() {
+      const destinations = getCurrentDestinations();
+      const grid = document.getElementById('destination-grid');
+      grid.innerHTML = destinations.map(dest => {
+        const isSelected = selectedDestinations.some(d => d.id === dest.id);
+        return `
+          <div class="destination-card ${isSelected ? 'selected' : ''}" onclick="toggleDestination(${dest.id})">
+            <div class="destination-card-header">
+              <div class="destination-card-title">${dest.name}</div>
+              <div class="destination-type">${dest.type}</div>
+            </div>
+            <div class="destination-card-body">
+              <p class="destination-description">${dest.description}</p>
+              <div class="destination-meta">
+                <div class="meta-item">
+                  <i class="fas fa-mountain"></i>
+                  ${dest.elevation}m
+                </div>
+                <div class="meta-item">
+                  <i class="fas fa-dollar-sign"></i>
+                  $${dest.baselineCost}/day
+                </div>
+                <div class="meta-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  ${dest.attractions.length} sites
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateRoute() {
+      if (routePolyline) {
+        map.removeLayer(routePolyline);
+      }
+
+      const routeDisplay = document.getElementById('route-display');
+      const routeList = document.getElementById('route-list');
+
+      if (selectedDestinations.length < 2) {
+        routeDisplay.style.display = 'none';
+        return;
+      }
+
+      routeDisplay.style.display = 'block';
+
+      const coordinates = selectedDestinations.map(d => [d.lat, d.lng]);
+      routePolyline = L.polyline(coordinates, {
+        color: '#1e40af',
+        weight: 3,
+        opacity: 0.8
+      }).addTo(map);
+
+      routeList.innerHTML = selectedDestinations.map((dest, index) => {
+        let distanceText = '';
+        let daysText = '';
+        
+        if (index > 0) {
+          const prevDest = selectedDestinations[index - 1];
+          const distance = calculateDistance(prevDest.lat, prevDest.lng, dest.lat, dest.lng);
+          distanceText = `${Math.round(distance)} km from previous`;
+          
+          const travelTime = Math.ceil(distance / 50);
+          daysText = `~${travelTime} hours travel`;
+        }
+
+        return `
+          <div class="route-item">
+            <div class="route-number">${index + 1}</div>
+            <div class="route-info">
+              <div class="route-destination">${dest.icon} ${dest.name}</div>
+              <div class="route-details">${distanceText}${distanceText && daysText ? ' • ' : ''}${daysText}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    function updateSummary() {
+      const travelers = config.travelers;
+      const duration = config.duration;
+      const travelStyle = config.travelStyle;
+
+      let totalDistance = 0;
+      for (let i = 1; i < selectedDestinations.length; i++) {
+        const prev = selectedDestinations[i - 1];
+        const curr = selectedDestinations[i];
+        totalDistance += calculateDistance(prev.lat, prev.lng, curr.lat, curr.lng);
+      }
+
+      const styleMultipliers = {
+        budget: 0.7,
+        standard: 1.0,
+        luxury: 1.8
+      };
+
+      const baseCostPerDay = selectedDestinations.reduce((sum, dest) => 
+        sum + dest.baselineCost, 0) / Math.max(selectedDestinations.length, 1);
+
+      const accommodationCost = baseCostPerDay * duration * travelers * styleMultipliers[travelStyle] * 0.4;
+      const transportationCost = (totalDistance * 0.1 * travelers) + (travelers * 200);
+      const foodCost = duration * travelers * 30 * styleMultipliers[travelStyle];
+      const activitiesCost = selectedDestinations.length * travelers * 50 * styleMultipliers[travelStyle];
+      
+      const totalCost = accommodationCost + transportationCost + foodCost + activitiesCost;
+
+      document.getElementById('summary-destinations').textContent = selectedDestinations.length;
+      document.getElementById('summary-distance').textContent = `${Math.round(totalDistance)} km`;
+      document.getElementById('summary-duration').textContent = `${duration} days`;
+      document.getElementById('summary-travelers').textContent = `${travelers} ${travelers === 1 ? 'person' : 'people'}`;
+      
+      document.getElementById('cost-accommodation').textContent = `$${Math.round(accommodationCost)}`;
+      document.getElementById('cost-transportation').textContent = `$${Math.round(transportationCost)}`;
+      document.getElementById('cost-food').textContent = `$${Math.round(foodCost)}`;
+      document.getElementById('cost-activities').textContent = `$${Math.round(activitiesCost)}`;
+      document.getElementById('cost-total').textContent = `$${Math.round(totalCost)}`;
+    }
+
+    function updateAllMarkerPopups() {
+      markers.forEach(({ destination, marker }) => {
+        marker.setPopupContent(createPopupContent(destination));
+      });
+    }
+
+    function updateAccommodationTab() {
+      const content = document.getElementById('accommodation-content');
+      
+      if (selectedDestinations.length === 0) {
+        content.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🏨</div>
+            <div class="empty-state-title">No Destinations Selected</div>
+            <p class="empty-state-description">Add destinations to your trip to view accommodation options</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (currentCountry === 'nepal') {
+        content.innerHTML = selectedDestinations.map(dest => `
+          <div style="margin-bottom: 2rem;">
+            <h4 style="color: #1e40af; margin-bottom: 1rem; font-size: 1.25rem;">
+              ${dest.icon} ${dest.name}
+            </h4>
+            <div class="accommodation-grid">
+              ${accommodationTypes.map(acc => {
+                const price = Math.round(dest.baselineCost * acc.priceMultiplier);
+                const isSelected = config.selectedAccommodations[dest.id] === acc.id;
+                return `
+                  <div class="accommodation-card ${isSelected ? 'selected' : ''}" 
+                       onclick="selectAccommodation(${dest.id}, '${acc.id}')">
+                    <div class="accommodation-image">${acc.icon}</div>
+                    <div class="accommodation-content">
+                      <div class="accommodation-title">${acc.name}</div>
+                      <div class="accommodation-type">${acc.description}</div>
+                      <div class="accommodation-features">
+                        ${acc.features.map(f => `<span class="feature-badge">${f}</span>`).join('')}
+                      </div>
+                      <div class="accommodation-price">
+                        <div>
+                          <div class="price-amount">$${price}</div>
+                          <div class="price-unit">per night</div>
+                        </div>
+                        ${isSelected ? '<span class="badge badge-blue">Selected</span>' : ''}
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        const countryName = countryNamesMap[currentCountry] || currentCountry;
+        content.innerHTML = `
+          <div class="section" style="text-align: center; padding: 3rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🏨</div>
+            <h4 style="color: #1e40af; font-size: 1.5rem; margin-bottom: 1rem;">Accommodation Planning</h4>
+            <p style="color: #64748b; max-width: 600px; margin: 0 auto;">
+              Detailed accommodation options are available for Nepal trips. For ${countryName}, 
+              accommodation costs are included in the trip estimate based on your selected destinations and travel style.
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    function selectAccommodation(destId, accId) {
+      config.selectedAccommodations[destId] = accId;
+      updateAccommodationTab();
+      showToast('Accommodation preference saved', 'success');
+    }
+
+    function updateActivitiesTab() {
+      const content = document.getElementById('activities-content');
+      
+      if (selectedDestinations.length === 0) {
+        content.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🎯</div>
+            <div class="empty-state-title">No Destinations Selected</div>
+            <p class="empty-state-description">Add destinations to your trip to view available activities</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (currentCountry === 'nepal') {
+        content.innerHTML = selectedDestinations.map(dest => `
+          <div style="margin-bottom: 2rem;">
+            <h4 style="color: #1e40af; margin-bottom: 1rem; font-size: 1.25rem;">
+              ${dest.icon} ${dest.name}
+            </h4>
+            <div class="activity-list">
+              ${dest.activities.map((activity, idx) => {
+                const activityId = `${dest.id}-${idx}`;
+                const isSelected = config.selectedActivities.includes(activityId);
+                const difficultyBadge = {
+                  easy: 'badge-green',
+                  moderate: 'badge-orange',
+                  high: 'badge-red'
+                }[activity.difficulty];
+                
+                return `
+                  <div class="activity-card ${isSelected ? 'selected' : ''}" 
+                       onclick="toggleActivity('${activityId}')">
+                    <div class="activity-checkbox">
+                      <input type="checkbox" ${isSelected ? 'checked' : ''} 
+                             onclick="event.stopPropagation(); toggleActivity('${activityId}')">
+                    </div>
+                    <div class="activity-icon">🎯</div>
+                    <div class="activity-details">
+                      <div class="activity-name">${activity.name}</div>
+                      <div class="activity-description">
+                        Experience this ${activity.difficulty} level activity
+                      </div>
+                      <div class="activity-meta">
+                        <div class="activity-meta-item">
+                          <i class="fas fa-clock"></i>
+                          ${activity.duration} hours
+                        </div>
+                        <div class="activity-meta-item">
+                          <i class="fas fa-dollar-sign"></i>
+                          $${activity.cost}
+                        </div>
+                        <div class="activity-meta-item">
+                          <span class="badge ${difficultyBadge}">${activity.difficulty}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        const countryName = countryNamesMap[currentCountry] || currentCountry;
+        content.innerHTML = `
+          <div class="section" style="text-align: center; padding: 3rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+            <h4 style="color: #1e40af; font-size: 1.5rem; margin-bottom: 1rem;">Activities Planning</h4>
+            <p style="color: #64748b; max-width: 600px; margin: 0 auto;">
+              Detailed activity options are available for Nepal trips. For ${countryName}, 
+              activity costs are included in the trip estimate. Popular activities include trekking, cultural tours, and mountain photography.
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    function toggleActivity(activityId) {
+      const index = config.selectedActivities.indexOf(activityId);
+      if (index > -1) {
+        config.selectedActivities.splice(index, 1);
+      } else {
+        config.selectedActivities.push(activityId);
+      }
+      updateActivitiesTab();
+      updateSummary();
+    }
+
+    function optimizeRoute() {
+      if (selectedDestinations.length < 3) {
+        showToast('Need at least 3 destinations to optimize', 'error');
+        return;
+      }
+
+      showToast('Optimizing route...', 'success');
+      
+      setTimeout(() => {
+        const optimized = [...selectedDestinations];
+        const start = optimized[0];
+        const remaining = optimized.slice(1);
+        const result = [start];
+        
+        while (remaining.length > 0) {
+          const current = result[result.length - 1];
+          let nearest = remaining[0];
+          let minDist = calculateDistance(current.lat, current.lng, nearest.lat, nearest.lng);
+          
+          for (let i = 1; i < remaining.length; i++) {
+            const dist = calculateDistance(current.lat, current.lng, remaining[i].lat, remaining[i].lng);
+            if (dist < minDist) {
+              minDist = dist;
+              nearest = remaining[i];
+            }
+          }
+          
+          result.push(nearest);
+          remaining.splice(remaining.indexOf(nearest), 1);
+        }
+        
+        selectedDestinations = result;
+        updateAllUI();
+        showToast('Route optimized successfully!', 'success');
+      }, 1000);
+    }
+
+    async function saveTrip() {
+      const modal = document.getElementById('save-trip-modal');
+      modal.classList.add('active');
+    }
+
+    async function confirmSaveTrip() {
+      const tripName = document.getElementById('trip-name').value.trim();
+      const tripNotes = document.getElementById('trip-notes').value.trim();
+      const tripStatus = document.getElementById('trip-status').value;
+
+      if (!tripName) {
+        showToast('Please enter a trip name', 'error');
+        return;
+      }
+
+      if (selectedDestinations.length === 0) {
+        showToast('Please select at least one destination', 'error');
+        return;
+      }
+
+      const confirmBtn = document.getElementById('confirm-save');
+      confirmBtn.disabled = true;
+      confirmBtn.innerHTML = '<span class="loading-spinner"></span> Saving...';
+
+      const tripData = {
+        trip_id: currentTrip ? currentTrip.trip_id : `trip_${Date.now()}`,
+        trip_name: tripName,
+        country: currentCountry,
+        created_date: new Date().toISOString(),
+        start_date: config.startDate || '',
+        end_date: config.endDate || '',
+        destinations: JSON.stringify(selectedDestinations.map(d => d.id)),
+        travelers: config.travelers,
+        duration: config.duration,
+        travel_style: config.travelStyle,
+        season: config.season,
+        total_cost: parseInt(document.getElementById('cost-total').textContent.replace(/\D/g, '')),
+        total_distance: parseInt(document.getElementById('summary-distance').textContent.replace(/\D/g, '')),
+        accommodations: JSON.stringify(config.selectedAccommodations),
+        transportation: '',
+        activities: JSON.stringify(config.selectedActivities),
+        notes: tripNotes,
+        is_favorite: false,
+        status: tripStatus
+      };
+
+      try {
+        let result;
+        if (currentTrip) {
+          result = await window.dataSdk.update({ ...tripData, __backendId: currentTrip.__backendId });
+        } else {
+          result = await window.dataSdk.create(tripData);
+        }
+
+        if (result.isOk) {
+          showToast(`Trip "${tripName}" saved successfully!`, 'success');
+          document.getElementById('save-trip-modal').classList.remove('active');
+          document.getElementById('save-trip-form').reset();
+          currentTrip = null;
+        } else {
+          showToast('Failed to save trip. Please try again.', 'error');
+        }
+      } catch (error) {
+        showToast('An error occurred while saving', 'error');
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = '<i class="fas fa-save"></i> Save Trip';
+      }
+    }
+
+    function deleteTrip(trip) {
+      tripToDelete = trip;
+      document.getElementById('delete-trip-name').textContent = trip.trip_name;
+      document.getElementById('delete-trip-modal').classList.add('active');
+    }
+
+    async function confirmDeleteTrip() {
+      if (!tripToDelete) return;
+
+      const confirmBtn = document.getElementById('confirm-delete');
+      confirmBtn.disabled = true;
+      confirmBtn.innerHTML = '<span class="loading-spinner"></span> Deleting...';
+
+      try {
+        const result = await window.dataSdk.delete(tripToDelete);
+        
+        if (result.isOk) {
+          showToast('Trip deleted successfully', 'success');
+          document.getElementById('delete-trip-modal').classList.remove('active');
+          tripToDelete = null;
+        } else {
+          showToast('Failed to delete trip', 'error');
+        }
+      } catch (error) {
+        showToast('An error occurred while deleting', 'error');
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = '<i class="fas fa-trash"></i> Delete Trip';
+      }
+    }
+
+    function loadTrip(trip) {
+      currentTrip = trip;
+      currentCountry = trip.country;
+      
+      const destIds = JSON.parse(trip.destinations);
+      const countryDests = countryDestinationsMap[trip.country] || [];
+      selectedDestinations = countryDests.filter(d => destIds.includes(d.id));
+      
+      config.travelers = trip.travelers;
+      config.duration = trip.duration;
+      config.travelStyle = trip.travel_style;
+      config.season = trip.season;
+      config.startDate = trip.start_date;
+      config.endDate = trip.end_date;
+      config.selectedAccommodations = JSON.parse(trip.accommodations || '{}');
+      config.selectedActivities = JSON.parse(trip.activities || '[]');
+      
+      document.getElementById('travelers').value = trip.travelers;
+      document.getElementById('duration').value = trip.duration;
+      document.getElementById('travel-style').value = trip.travel_style;
+      document.getElementById('season').value = trip.season;
+      document.getElementById('start-date').value = trip.start_date;
+      document.getElementById('end-date').value = trip.end_date;
+      
+      updateSliderDisplay('travelers', trip.travelers);
+      updateSliderDisplay('duration', trip.duration);
+      
+      document.getElementById('country-selection-hero').style.display = 'none';
+      document.getElementById('country-selection-section').style.display = 'none';
+      document.getElementById('view-planning').style.display = 'block';
+      document.getElementById('view-my-trips').style.display = 'none';
+      
+      document.getElementById('nav-new-trip').classList.add('active');
+      document.getElementById('nav-my-trips').classList.remove('active');
+      
+      setTimeout(() => {
+        if (!map) {
+          initializeMap();
+        }
+        
+        const countryCoords = {
+          nepal: [28.3949, 84.1240],
+          bhutan: [27.5142, 90.4336],
+          india: [32.7266, 74.8570],
+          tibet: [29.6500, 91.1000],
+          pakistan: [35.9250, 74.3587]
+        };
+        
+        if (map) {
+          map.setView(countryCoords[trip.country], 7);
+          map.invalidateSize();
+        }
+        
+        clearMap();
+        addDestinationMarkers();
+        updateAllUI();
+      }, 50);
+      
+      showToast(`Loaded trip: ${trip.trip_name}`, 'success');
+    }
+
+    function renderTripsList() {
+      const tripsList = document.getElementById('trips-list');
+      
+      if (allTrips.length === 0) {
+        tripsList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">✈️</div>
+            <div class="empty-state-title">No Saved Trips Yet</div>
+            <p class="empty-state-description">Start planning your first adventure!</p>
+            <button class="btn btn-primary" onclick="backToCountrySelection()">
+              <i class="fas fa-plus-circle"></i>
+              <span id="cta-button">Start Planning</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      tripsList.innerHTML = allTrips.map(trip => {
+        const destIds = JSON.parse(trip.destinations);
+        const statusClass = trip.status || 'draft';
+        const statusText = (trip.status || 'draft').charAt(0).toUpperCase() + (trip.status || 'draft').slice(1);
+        const countryName = countryNamesMap[trip.country] || trip.country;
+        
+        return `
+          <div class="trip-card" onclick="loadTrip(${JSON.stringify(trip).replace(/"/g, '&quot;')})">
+            <div class="trip-card-header">
+              <div>
+                <div class="trip-card-title">${trip.trip_name} <span class="badge badge-blue">${countryName}</span></div>
+                <div class="trip-card-date">Created: ${new Date(trip.created_date).toLocaleDateString()}</div>
+                ${trip.start_date ? `<div class="trip-card-date">Travel: ${new Date(trip.start_date).toLocaleDateString()}</div>` : ''}
+              </div>
+              <div class="trip-card-actions">
+                <button class="icon-btn" onclick="event.stopPropagation(); loadTrip(${JSON.stringify(trip).replace(/"/g, '&quot;')})" title="Load Trip">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="icon-btn" onclick="event.stopPropagation(); deleteTrip(${JSON.stringify(trip).replace(/"/g, '&quot;')})" title="Delete Trip">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="trip-card-stats">
+              <div class="trip-stat">
+                <span class="trip-stat-value">${destIds.length}</span>
+                <span class="trip-stat-label">Destinations</span>
+              </div>
+              <div class="trip-stat">
+                <span class="trip-stat-value">${trip.duration}</span>
+                <span class="trip-stat-label">Days</span>
+              </div>
+              <div class="trip-stat">
+                <span class="trip-stat-value">${trip.travelers}</span>
+                <span class="trip-stat-label">Travelers</span>
+              </div>
+              <div class="trip-stat">
+                <span class="trip-stat-value">$${trip.total_cost.toLocaleString()}</span>
+                <span class="trip-stat-label">Cost</span>
+              </div>
+            </div>
+            <span class="trip-status ${statusClass}">${statusText}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function switchView(view) {
+      if (view === 'planning') {
+        if (!currentCountry) {
+          backToCountrySelection();
+          return;
+        }
+      }
+      
+      document.getElementById('view-planning').style.display = view === 'planning' ? 'block' : 'none';
+      document.getElementById('view-my-trips').style.display = view === 'trips' ? 'block' : 'none';
+      
+      document.getElementById('nav-new-trip').classList.toggle('active', view === 'planning');
+      document.getElementById('nav-my-trips').classList.toggle('active', view === 'trips');
+      
+      if (view === 'trips') {
+        renderTripsList();
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      toast.className = `toast ${type} active`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 3000);
+    }
+
+    function updateSliderDisplay(sliderId, value) {
+      const valueDisplay = document.getElementById(`${sliderId}-value`);
+      
+      if (sliderId === 'travelers') {
+        valueDisplay.textContent = value === 1 ? '1 person' : `${value} people`;
+      } else if (sliderId === 'duration') {
+        valueDisplay.textContent = `${value} days`;
+      }
+    }
+
+    function initTabs() {
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.dataset.tab;
+          
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          btn.classList.add('active');
+          document.getElementById(`tab-${targetTab}`).classList.add('active');
+        });
+      });
+    }
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allTrips = data;
+        document.getElementById('trip-count').textContent = data.length;
+        
+        if (document.getElementById('view-my-trips').style.display !== 'none') {
+          renderTripsList();
+        }
+      }
+    };
+
+    const capabilities = {
+      recolorables: [],
+      borderables: [],
+      fontEditable: undefined,
+      fontSizeable: undefined
+    };
+
+    async function onConfigChange(cfg) {
+      document.getElementById('main-title').textContent = cfg.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = cfg.subtitle || defaultConfig.subtitle;
+      
+      const ctaButtons = document.querySelectorAll('#cta-button');
+      ctaButtons.forEach(btn => {
+        btn.textContent = cfg.cta_button || defaultConfig.cta_button;
+      });
+      
+      document.getElementById('save-button-text').textContent = cfg.save_button_text || defaultConfig.save_button_text;
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['main_title', cfg.main_title || defaultConfig.main_title],
+        ['subtitle', cfg.subtitle || defaultConfig.subtitle],
+        ['cta_button', cfg.cta_button || defaultConfig.cta_button],
+        ['save_button_text', cfg.save_button_text || defaultConfig.save_button_text]
+      ]);
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTabs();
+
+      ['travelers', 'duration'].forEach(id => {
+        const slider = document.getElementById(id);
+        slider.addEventListener('input', () => {
+          config[id] = parseInt(slider.value);
+          updateSliderDisplay(id, config[id]);
+          updateSummary();
+        });
+      });
+
+      ['travel-style', 'season', 'fitness-level', 'travel-pace'].forEach(id => {
+        document.getElementById(id).addEventListener('change', (e) => {
+          const key = id.replace(/-/g, '');
+          config[key.replace('travelpace', 'travelPace').replace('travelstyle', 'travelStyle').replace('fitnesslevel', 'fitnessLevel')] = e.target.value;
+          updateSummary();
+        });
+      });
+
+      ['start-date', 'end-date'].forEach(id => {
+        document.getElementById(id).addEventListener('change', (e) => {
+          const key = id.replace(/-/g, '');
+          config[key.replace('startdate', 'startDate').replace('enddate', 'endDate')] = e.target.value;
+        });
+      });
+
+      document.getElementById('btn-optimize-route').addEventListener('click', optimizeRoute);
+      document.getElementById('btn-save-trip').addEventListener('click', saveTrip);
+      document.getElementById('confirm-save').addEventListener('click', confirmSaveTrip);
+      document.getElementById('cancel-save').addEventListener('click', () => {
+        document.getElementById('save-trip-modal').classList.remove('active');
+      });
+      document.getElementById('close-save-modal').addEventListener('click', () => {
+        document.getElementById('save-trip-modal').classList.remove('active');
+      });
+      
+      document.getElementById('confirm-delete').addEventListener('click', confirmDeleteTrip);
+      document.getElementById('cancel-delete').addEventListener('click', () => {
+        document.getElementById('delete-trip-modal').classList.remove('active');
+      });
+      document.getElementById('close-delete-modal').addEventListener('click', () => {
+        document.getElementById('delete-trip-modal').classList.remove('active');
+      });
+
+      document.getElementById('nav-new-trip').addEventListener('click', () => switchView('planning'));
+      document.getElementById('nav-my-trips').addEventListener('click', () => switchView('trips'));
+      document.getElementById('btn-back-to-countries').addEventListener('click', backToCountrySelection);
+
+      document.getElementById('btn-recenter').addEventListener('click', () => {
+        if (!currentCountry) return;
+        const countryCoords = {
+          nepal: [28.3949, 84.1240],
+          bhutan: [27.5142, 90.4336],
+          india: [32.7266, 74.8570],
+          tibet: [29.6500, 91.1000],
+          pakistan: [35.9250, 74.3587]
+        };
+        map.setView(countryCoords[currentCountry], 7);
+      });
+
+      document.getElementById('btn-fit-route').addEventListener('click', () => {
+        if (routePolyline) {
+          map.fitBounds(routePolyline.getBounds(), { padding: [50, 50] });
+        }
+      });
+
+      document.getElementById('btn-generate-itinerary').addEventListener('click', () => {
+        if (selectedDestinations.length === 0) {
+          showToast('Please select destinations first', 'error');
+          return;
+        }
+        showToast('Itinerary generation coming soon!', 'success');
+      });
+
+      if (window.dataSdk) {
+        await window.dataSdk.init(dataHandler);
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: () => capabilities,
+          mapToEditPanelValues
+        });
+      }
+
+      document.querySelectorAll('.country-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const country = card.dataset.country;
+          selectCountry(country);
+        });
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b2f1991a3e69888',t:'MTc2NjU2ODgzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
